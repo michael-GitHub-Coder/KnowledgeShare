@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose, from "mongoose";
 import bcrypt from "bcryptjs"
 
 
@@ -15,11 +15,15 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        required:true
+        required:true,
+        enum: ["Admin","Expert","Public"],
+        default: "Public",
     },
     status:{
         type:String,
-        required:true
+        required:true,
+        enum:["Active","Inactive"],
+        default:"Active",
     },
     password:{
         type:String,

@@ -32,15 +32,18 @@ export const userAuth = async (req,res) =>{
 
 export const createUser = async (req,res) =>{
 
-    const {email,password} = req.body;
+    const {email,username,role,status,password} = req.body;
 
-    if(!email || !password){
+    if(!email || !password || !username || !role || !status){
         res.status(201).json({messgae:"Please enter all fields"});
     }
 
     try {
         const user = User.create({
             email,
+            username,
+            role,
+            status,
             password,
         });
         if(user){
