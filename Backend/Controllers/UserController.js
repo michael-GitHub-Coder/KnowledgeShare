@@ -3,32 +3,31 @@ import User from "../Models/UserModel.js";
 import generateToken from "../Utils/generateToken.js";
 
 
-export const userAuth = async (req,res) =>{
+export const userAuth = async (req, res) => {
+    const { email, password } = req.body;
 
-    const {email,password} = req.body;
-
-    if(!email || !password){
-        res.status(400).json({success:false,messgae:"Please fill all the fields"})
+    if (!email || !password) {
+        return res.status(400).json({ success: false, message: "Please fill all the fields" });
     }
 
     try {
-        const userExits = await User.findOne({email});
-       
-        if(userExits && (await userExits.matchPasswords(password))){
+        const userExits = await User.findOne({ email });
+    
+
+        if (userExits && (await userExits.matchPasswords(password))) {
             generateToken(res, userExits._id);
-            res.status(201).json({
+            return res.status(200).json({
                 _id: userExits._id,
                 email: userExits.email,
-                password: userExits.password,
+                username: userExits.username,
             });
-        }else{
-            res.status(404).json({success:false,message:"Invalid emial or password"})
         }
 
+        res.status(401).json({ success: false, message: "Invalid email or password" });
     } catch (error) {
-        res.status(400).json({message:error.message})
+        res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
 export const createUser = async (req,res) =>{
 
@@ -87,7 +86,7 @@ export const updateUser = async (req,res) =>{
     try {
         const wUser = await User.findByIdAndUpdate(id,newUser);
         if(wUser){
-            res.status(200).json({success:false,messgae:"User updated", User:newUser});
+            res.status(200).json({success:true,messgae:"User updated", User:newUser});
         }else{
             res.status(200).json({success:false,messgae:"failed to update user"});
         }

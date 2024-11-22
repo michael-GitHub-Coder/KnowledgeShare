@@ -1,4 +1,4 @@
-import mongoose, from "mongoose";
+import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
 
 
@@ -28,7 +28,13 @@ const userSchema = new mongoose.Schema({
     password:{
         type:String,
         required:true
-    }
+    },
+    guides:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Guide",
+        },
+    ]
 },{
     timestamps: true
 })
