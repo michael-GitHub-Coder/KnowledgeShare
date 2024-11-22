@@ -124,7 +124,7 @@ export const deleteUser = async (req,res)=>{
     }
 }
 
-export const activateDeactivateUser = async (req,res) =>{
+export const DeactivateUser = async (req,res) =>{
 
     const {id} = req.params;
     const user = req.body;
@@ -142,6 +142,31 @@ export const activateDeactivateUser = async (req,res) =>{
             res.status(200).json({success:true,message:"User diactivated"});
         }else{
             res.status(401).json({success:false,message:"failed to diactivate user"});
+        }
+
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+}
+export const activateUser = async (req,res) =>{
+
+    const {id} = req.params;
+    const user = req.body;
+
+    if(!id){
+        res.status(203).json({success:false,message:"INVALID USER ID"});
+    }
+    if(!user.status){
+        res.status(203).json({success:false,message:"Please fill all the fields"});
+    }
+
+    try {
+        const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
+        console.log(userStatusUpdate);
+        if(userStatusUpdate){
+            res.status(200).json({success:true,message:"User account activated"});
+        }else{
+            res.status(401).json({success:false,message:"failed to activate user"});
         }
 
     } catch (error) {
