@@ -163,7 +163,7 @@ export const activateUser = async (req,res) =>{
 
     try {
         const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
-        // console.log(userStatusUpdate);
+       
         if(userStatusUpdate){
             res.status(200).json({success:true,message:"User account activated"});
         }else{

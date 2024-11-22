@@ -46,7 +46,7 @@ export const updateGuide = async (req,res) =>{
         res.status(203).json({success:false, message:"Required fields are empty"});
     }
     try {
-        const updatedGuide = await Guide.findByIdandUpdate(id,guide);
+        const updatedGuide = await Guide.findByIdAndUpdate(id,guide);
         if(updateGuide){
             res.status(200).json({success:true, message:"Guide updated successfuly",Guide:updatedGuide})
         }else{
