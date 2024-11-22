@@ -195,3 +195,25 @@ export const getUserByEmail = async (req,res) => {
         res.status(401).json({messgae:"server Error"})
     }
 }
+
+export const suspendAccount = async (req,res) => {
+
+    const {id} = req.params;
+    const userData = req.body;
+    
+    if(!userData.status){
+        res.status(200).json({message:"invalid status"});
+    }
+
+    try {
+        const suspendUser = await User.findByIdAndUpdate(id,userData);
+        if(suspendUser){
+            res.status(200).json({success:true,message:"Account suspended"});
+        }else{
+            res.status(401).json({success:false,message:"failed to delete user"});
+        }
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+
+}
