@@ -174,3 +174,24 @@ export const activateUser = async (req,res) =>{
         res.status(400).json({success:false,message:error.message});
     }
 }
+
+export const getUserByEmail = async (req,res) => {
+
+    const {email} = req.body;
+
+    if(!email){
+        res.status(401).json({message:"Please fill all the fields"})
+    }
+
+    try {
+        const allusers = await User.findOne({email});
+        if(allusers){
+            res.status(200).json({success:true, message:"users", User:allusers})
+        }else{
+            res.status(200).json({success:false, message:"failed to get users"})
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).json({messgae:"server Error"})
+    }
+}
