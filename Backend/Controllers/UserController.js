@@ -11,23 +11,31 @@ export const userAuth = async (req, res) => {
     }
 
     try {
+
         const userExits = await User.findOne({ email });
     
+        if(userExits.status === "Active"){
 
-        if (userExits && (await userExits.matchPasswords(password))) {
-            generateToken(res, userExits._id);
+            if (userExits && (await userExits.matchPasswords(password))) {
+                generateToken(res, userExits._id);
+                return res.status(200).json({
+                    _id: userExits._id,
+                    email: userExits.email,
+                    username: userExits.username,
+                });
+            }
+        }else if(userExits.status === "Inactive"){
             return res.status(200).json({
-                _id: userExits._id,
-                email: userExits.email,
-                username: userExits.username,
+                message:"User account is Inactive"
             });
         }
-
+        
         res.status(401).json({ success: false, message: "Invalid email or password" });
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
-};
+}
 
 export const createUser = async (req,res) =>{
 
@@ -111,6 +119,31 @@ export const deleteUser = async (req,res)=>{
         }else{
             res.status(401).json({success:false,message:"failed to delete user"});
         }
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+}
+
+export const activateDeactivateUser = async (req,res) =>{
+
+    const {id} = req.params;
+    const user = req.body;
+
+    if(!id){
+        res.status(203).json({success:false,message:"INVALID USER ID"});
+    }
+    if(!user.status){
+        res.status(203).json({success:false,message:"Please fill all the fields"});
+    }
+
+    try {
+        const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
+        if(userStatusUpdate){
+            res.status(200).json({success:true,message:"User diactivated"});
+        }else{
+            res.status(401).json({success:false,message:"failed to diactivate user"});
+        }
+
     } catch (error) {
         res.status(400).json({success:false,message:error.message});
     }
