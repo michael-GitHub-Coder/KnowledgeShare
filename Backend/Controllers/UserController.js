@@ -3,30 +3,38 @@ import User from "../Models/UserModel.js";
 import generateToken from "../Utils/generateToken.js";
 
 
-export const userAuth = async (req,res) =>{
+export const userAuth = async (req, res) => {
+    const { email, password } = req.body;
 
-    const {email,password} = req.body;
-
-    if(!email || !password){
-        res.status(400).json({success:false,messgae:"Please fill all the fields"})
+    if (!email || !password) {
+        return res.status(400).json({ success: false, message: "Please fill all the fields" });
     }
 
     try {
-        const userExits = await User.findOne({email});
-       
-        if(userExits && (await userExits.matchPasswords(password))){
-            generateToken(res, userExits._id);
-            res.status(201).json({
-                _id: userExits._id,
-                email: userExits.email,
-                password: userExits.password,
-            });
-        }else{
-            res.status(404).json({success:false,message:"Invalid emial or password"})
+
+        const userExits = await User.findOne({ email });
+        if(userExits){
+            if(userExits.status === "Active"){
+
+                if (await userExits.matchPasswords(password)) {
+                    generateToken(res, userExits._id);
+                    return res.status(200).json({
+                        _id: userExits._id,
+                        email: userExits.email,
+                        username: userExits.username,
+                    });
+                }
+            }else if(userExits.status === "Inactive"){
+                return res.status(200).json({
+                    message:"User account is Inactive"
+                });
+            }
         }
+       
+        res.status(401).json({ success: false, message: "Invalid email or password" });
 
     } catch (error) {
-        res.status(400).json({message:error.message})
+        res.status(500).json({ success: false, message: error.message });
     }
 }
 
@@ -115,4 +123,97 @@ export const deleteUser = async (req,res)=>{
     } catch (error) {
         res.status(400).json({success:false,message:error.message});
     }
+}
+
+export const DeactivateUser = async (req,res) =>{
+
+    const {id} = req.params;
+    const user = req.body;
+
+    if(!id){
+        res.status(203).json({success:false,message:"INVALID USER ID"});
+    }
+    if(!user.status){
+        res.status(203).json({success:false,message:"Please fill all the fields"});
+    }
+
+    try {
+        const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
+        if(userStatusUpdate){
+            res.status(200).json({success:true,message:"User diactivated"});
+        }else{
+            res.status(401).json({success:false,message:"failed to diactivate user"});
+        }
+
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+}
+export const activateUser = async (req,res) =>{
+
+    const {id} = req.params;
+    const user = req.body;
+
+    if(!id){
+        res.status(203).json({success:false,message:"INVALID USER ID"});
+    }
+    if(!user.status){
+        res.status(203).json({success:false,message:"Please fill all the fields"});
+    }
+
+    try {
+        const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
+       
+        if(userStatusUpdate){
+            res.status(200).json({success:true,message:"User account activated"});
+        }else{
+            res.status(401).json({success:false,message:"failed to activate user"});
+        }
+
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+}
+
+export const getUserByEmail = async (req,res) => {
+
+    const {email} = req.body;
+
+    if(!email){
+        res.status(401).json({message:"Please fill all the fields"})
+    }
+
+    try {
+        const allusers = await User.findOne({email});
+        if(allusers){
+            res.status(200).json({success:true, message:"users", User:allusers})
+        }else{
+            res.status(200).json({success:false, message:"failed to get users"})
+        }
+    } catch (error) {
+        console.log(error.message)
+        res.status(401).json({messgae:"server Error"})
+    }
+}
+
+export const suspendAccount = async (req,res) => {
+
+    const {id} = req.params;
+    const userData = req.body;
+    
+    if(!userData.status){
+        res.status(200).json({message:"invalid status"});
+    }
+
+    try {
+        const suspendUser = await User.findByIdAndUpdate(id,userData);
+        if(suspendUser){
+            res.status(200).json({success:true,message:"Account suspended"});
+        }else{
+            res.status(401).json({success:false,message:"failed to delete user"});
+        }
+    } catch (error) {
+        res.status(400).json({success:false,message:error.message});
+    }
+
 }

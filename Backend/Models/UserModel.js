@@ -22,13 +22,19 @@ const userSchema = new mongoose.Schema({
     status:{
         type:String,
         required:true,
-        enum:["Active","Inactive"],
+        enum:["Active","Inactive","Suspend"],
         default:"Active",
     },
     password:{
         type:String,
         required:true
-    }
+    },
+    guides:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref:"Guide",
+        },
+    ]
 },{
     timestamps: true
 })
