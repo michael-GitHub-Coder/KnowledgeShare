@@ -87,7 +87,7 @@ export const updateUser = async (req,res) =>{
     try {
         const wUser = await User.findByIdAndUpdate(id,newUser);
         if(wUser){
-            res.status(200).json({success:false,messgae:"User updated", User:newUser});
+            res.status(200).json({success:true,messgae:"User updated", User:newUser});
         }else{
             res.status(200).json({success:false,messgae:"failed to update user"});
         }

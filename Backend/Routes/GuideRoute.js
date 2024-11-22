@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/add",createGuide);
 router.get("/all",getAllguides);
-router.put("/update",updateGuide);
+router.put("/update/:id",updateGuide);
 
 export default router;
