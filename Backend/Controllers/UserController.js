@@ -13,23 +13,24 @@ export const userAuth = async (req, res) => {
     try {
 
         const userExits = await User.findOne({ email });
-    
-        if(userExits.status === "Active"){
+        if(userExits){
+            if(userExits.status === "Active"){
 
-            if (userExits && (await userExits.matchPasswords(password))) {
-                generateToken(res, userExits._id);
+                if (await userExits.matchPasswords(password)) {
+                    generateToken(res, userExits._id);
+                    return res.status(200).json({
+                        _id: userExits._id,
+                        email: userExits.email,
+                        username: userExits.username,
+                    });
+                }
+            }else if(userExits.status === "Inactive"){
                 return res.status(200).json({
-                    _id: userExits._id,
-                    email: userExits.email,
-                    username: userExits.username,
+                    message:"User account is Inactive"
                 });
             }
-        }else if(userExits.status === "Inactive"){
-            return res.status(200).json({
-                message:"User account is Inactive"
-            });
         }
-        
+       
         res.status(401).json({ success: false, message: "Invalid email or password" });
 
     } catch (error) {
@@ -138,6 +139,7 @@ export const DeactivateUser = async (req,res) =>{
 
     try {
         const userStatusUpdate = await  User.findByIdAndUpdate(id,user);
+        
         if(userStatusUpdate){
             res.status(200).json({success:true,message:"User diactivated"});
         }else{
