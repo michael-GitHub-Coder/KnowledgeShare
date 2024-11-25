@@ -160,6 +160,27 @@ export const unlikeGuide = async (req, res) => {
     }
 };
 
+
+export const latestGuides = async (req, res) => {
+
+    let sortedByLatestDate = [];
+    
+    try {
+       
+        const latestGuides = await Guide.find();
+        
+        if (latestGuides) {
+            sortedByLatestDate = [...latestGuides].sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+        }
+
+        res.status(200).json({ sortedByLatestDate });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //TODO: the likes/dislikes and comments for every guides by login in users.
 //TODO: Establish the relationships between all the collections.
 //TODO: Top rated guides

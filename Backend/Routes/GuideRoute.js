@@ -1,5 +1,5 @@
 import express from "express";
-import { commentGuide, createGuide, deleteGuide, getAllguides, likeGuide, unlikeGuide, updateGuide } from "../Controllers/GuideController.js";
+import { commentGuide, createGuide, deleteGuide, getAllguides, latestGuides, likeGuide, unlikeGuide, updateGuide } from "../Controllers/GuideController.js";
 import protect from "../Middleware/authMidware.js"
 
 const router = express.Router();
@@ -11,5 +11,5 @@ router.delete("/delete/:id", deleteGuide);
 router.post("/like/:id",protect,likeGuide);
 router.post("/unlike/:id",protect,unlikeGuide);
 router.post("/comment/:id",protect,commentGuide);
-
+router.get("/latestGuides",protect,latestGuides);
 export default router;
