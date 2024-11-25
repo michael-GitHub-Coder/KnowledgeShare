@@ -160,11 +160,10 @@ export const unlikeGuide = async (req, res) => {
     }
 };
 
-
 export const latestGuides = async (req, res) => {
 
     let sortedByLatestDate = [];
-    
+
     try {
        
         const latestGuides = await Guide.find();
@@ -175,7 +174,7 @@ export const latestGuides = async (req, res) => {
             );
         }
 
-        res.status(200).json({ sortedByLatestDate });
+        res.status(200).json({message:"latest guides", sortedByLatestDate });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
