@@ -1,4 +1,6 @@
 import Guide from "../Models/GuideModel.js";
+import likeModel from "../Models/likeModel.js";
+
 
 export const createGuide = async (req, res) => {
     const { title, category, content, media } = req.body;
@@ -92,6 +94,18 @@ export const deleteGuide = async (req,res) =>{
     }
 }
 
+
+export const likeGuide = async (req,res) =>{
+
+    try {
+        await likeModel.create({
+            user_id: req.user._id,
+        })
+    } catch (error) {
+        
+    }
+    
+}
 //TODO: the likes/dislikes and comments for every guides by login in users.
 //TODO: Establish the relationships between all the collections.
 //TODO: Top rated guides
