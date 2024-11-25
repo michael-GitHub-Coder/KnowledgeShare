@@ -1,29 +1,42 @@
 import Guide from "../Models/GuideModel.js";
 
+export const createGuide = async (req, res) => {
+    const { title, category, content, media } = req.body;
 
-export const createGuide = async (req,res)=>{
-    
-   
-    const {title,category,content,media} = req.body;
-
-    if(!title || !content){
-        res.status(400).json({success:false, message:"Please fil all the fileds."})
+  
+    if (!title || !content) {
+        return res.status(400).json({ success: false, message: "Please fill all the fields." });
     }
-
+ 0
     try {
-         await Guide.create({
-            UserId: req.user._id,
+     
+        const guide = await Guide.create({
+            userId: req.user._id, 
             title,
             category,
             content,
             media,
         });
-        res.status(200).json({success:true,message:"Guide created",title:(await Guide.title),category:(await Guide.category) })
-    } catch (error) {
-        res.status(400).json({success:false,messgae:"failed",message:error.message})
-    }
 
-}
+        res.status(201).json({
+            success: true,
+            message: "Guide created successfully.",
+            guide: {
+                id: guide._id,
+                title: guide.title,
+                category: guide.category,
+            },
+        });
+    } catch (error) {
+   
+        res.status(500).json({
+            success: false,
+            message: "Failed to create guide.",
+            error: error.message,
+        });
+    }
+};
+
 
 export const getAllguides = async (req,res)=>{
 
