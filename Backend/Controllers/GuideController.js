@@ -1,6 +1,7 @@
 import Guide from "../Models/GuideModel.js";
 import likeModel from "../Models/likeModel.js";
 import commentModel from "../Models/Comments.js";
+import Comment from "../Models/Comments.js";
 
 export const createGuide = async (req, res) => {
     const { title, category, content, media } = req.body;
@@ -179,6 +180,7 @@ export const latestGuides = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 export const topRatedGuide = async (req, res) => {
     try {
        
@@ -204,7 +206,6 @@ export const topRatedGuide = async (req, res) => {
     }
 };
 
-
 export const totGuideLikes = async (req, res) => {
     const { id } = req.params; 
 
@@ -227,5 +228,80 @@ export const totGuideLikes = async (req, res) => {
     }
 };
 
+export const getGuideDetails = async (req, res) => {
+    const { id } = req.params; 
+
+    try {
+        
+        const guide = await Guide.findById(id)
+            .populate("userId", "name email") 
+            .populate("comments.user_id", "name") 
+            .exec();
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        
+        const likeCount = await likeModel.countDocuments({ guide_id: id });
+
+        
+        const comments = await Comment.find({ guide_id: id })
+            .populate("user_id", "name") 
+            .populate("replies.user_id", "name") 
+            .exec();
+
+        
+        res.status(200).json({
+            guide,
+            totalLikes: likeCount,
+            comments
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
 
 
+export const getGuideDetailsWithAllUsers = async (req, res) => {
+    const { id } = req.params; // Guide ID
+
+    try {
+        // Step 1: Fetch the guide details
+        const guide = await Guide.findById(id)
+            .populate("userId", "name email") // Populate the guide author details
+            .exec();
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        // Step 2: Fetch all comments for the guide with user details
+        const comments = await Comment.find({ guide_id: id })
+            .populate("user_id", "name email") // Populate user details for comments
+            .populate("replies.user_id", "name email") // Populate user details for replies
+            .exec();
+
+        // Step 3: Fetch all likes for the guide with user details
+        const likes = await likeModel.find({ guide_id: id })
+            .populate("user_id", "name email") // Populate user details for likes
+            .exec();
+
+        // Step 4: Collect all unique users from comments and likes
+        const usersFromComments = comments.map((comment) => comment.user_id);
+        const usersFromLikes = likes.map((like) => like.user_id);
+
+        // Combine and remove duplicates
+        const allUsers = [...new Map([...usersFromComments, ...usersFromLikes].map(user => [user._id, user])).values()];
+
+        // Step 5: Respond with the guide details, comments, likes, and unique users
+        res.status(200).json({
+            guide,
+            comments,
+            likes,
+            allUsers // Contains all unique users who commented or liked
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
