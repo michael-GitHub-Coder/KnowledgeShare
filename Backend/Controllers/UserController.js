@@ -75,7 +75,7 @@ export const createUser = async (req,res) =>{
 export const logOutUser = async (req,res) =>{
 
     try {
-        res.cookies("jwt","",{
+        res.cookie("jwt","",{
             HttpOnly: true,
             expires: new Date(0),
         });

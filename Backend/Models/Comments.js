@@ -1,23 +1,27 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const CommentSchema = new mongoose.Schema({
   user_id: { 
     type: mongoose.Schema.Types.ObjectId, 
-    ref: 'User', 
+    ref: "User", 
     required: true 
+   },
+   guide_id:{
+      type: mongoose.Schema.Types.ObjectId, 
+      ref: "Guide", 
    },
   comment_text: {
      type: String, 
      required: true 
     },
-  likes: {
-     type: Number, 
-     default: 0
-     },
-  dislikes: {
-     type: Number,
-      default: 0
-     },
+//   likes: {
+//      type: Number, 
+//      default: 0
+//      },
+//   dislikes: {
+//      type: Number,
+//       default: 0
+//      },
   replies: [{
     user_id: {
          type: mongoose.Schema.Types.ObjectId, 

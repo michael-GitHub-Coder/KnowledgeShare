@@ -1,6 +1,6 @@
 import Guide from "../Models/GuideModel.js";
 import likeModel from "../Models/likeModel.js";
-
+import commentModel from "../Models/Comments.js";
 
 export const createGuide = async (req, res) => {
     const { title, category, content, media } = req.body;
@@ -94,19 +94,138 @@ export const deleteGuide = async (req,res) =>{
     }
 }
 
+export const commentGuide = async (req, res) => {
 
-export const likeGuide = async (req,res) =>{
+    const { id } = req.params;
+    const { comment_text } = req.body; 
 
     try {
-        await likeModel.create({
+      
+        if (!comment_text || comment_text.trim() === "") {
+            return res.status(400).json({ message: "Comment cannot be empty" });
+        }
+       
+        const newComment = await commentModel.create({
+            guide_id: id,
             user_id: req.user._id,
-        })
+            comment_text, 
+        });
+
+        res.status(200).json({ message: "Comment added successfully", comment_text: newComment });
     } catch (error) {
-        
+        res.status(500).json({ message: error.message });
     }
-    
-}
-//TODO: the likes/dislikes and comments for every guides by login in users.
-//TODO: Establish the relationships between all the collections.
-//TODO: Top rated guides
-//TODO: list of latest guides
+};
+
+
+export const likeGuide = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+   
+        const existingLike = await likeModel.findOne({ user_id: req.user._id, guide_id: id });
+
+        if (existingLike) {
+            return res.status(400).json({ message: "Guide already liked" });
+        }
+
+        const newLike = await likeModel.create({
+            user_id: req.user._id,
+            guide_id: id,
+        });
+
+        res.status(200).json({ message: "Guide liked", like: newLike });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const unlikeGuide = async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+       
+        const existingLike = await likeModel.findOne({ user_id: req.user._id, guide_id: id });
+
+        if (!existingLike) {
+            return res.status(400).json({ message: "Guide not liked yet" });
+        }
+
+        await likeModel.deleteOne({ user_id: req.user._id, guide_id: id });
+
+        res.status(200).json({ message: "Guide unliked successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const latestGuides = async (req, res) => {
+
+    let sortedByLatestDate = [];
+
+    try {
+       
+        const latestGuides = await Guide.find();
+        
+        if (latestGuides) {
+            sortedByLatestDate = [...latestGuides].sort(
+                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+            );
+        }
+
+        res.status(200).json({message:"latest guides", sortedByLatestDate });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+export const topRatedGuide = async (req, res) => {
+    try {
+       
+        const topLikedGuide = await likeModel.aggregate([
+            { $group: { _id: "$guide_id", totalLikes: { $sum: 1 } } }, 
+            { $sort: { totalLikes: -1 } }, 
+            { $limit: 1 } 
+        ]);
+
+        if (!topLikedGuide.length) {
+            return res.status(404).json({ message: "No likes found for any guides." });
+        }
+
+        const guide = await Guide.findById(topLikedGuide[0]._id);
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        res.status(200).json({ guide, totalLikes: topLikedGuide[0].totalLikes });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+export const totGuideLikes = async (req, res) => {
+    const { id } = req.params; 
+
+    try {
+        
+        const guide = await Guide.findById(id).populate("comments.user_id", "name"); 
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        const likeCount = await likeModel.countDocuments({ guide_id: id });
+
+        res.status(200).json({
+            guide,
+            totalLikes: likeCount
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
