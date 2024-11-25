@@ -1,6 +1,6 @@
 import Guide from "../Models/GuideModel.js";
 import likeModel from "../Models/likeModel.js";
-
+import commentModel from "../Models/Comments.js";
 
 export const createGuide = async (req, res) => {
     const { title, category, content, media } = req.body;
@@ -93,6 +93,30 @@ export const deleteGuide = async (req,res) =>{
         res.status(400).json({success:false,message:error.message})
     }
 }
+
+export const commentGuide = async (req, res) => {
+
+    const { id } = req.params;
+    const { comment_text } = req.body; 
+
+    try {
+      
+        if (!comment_text || comment_text.trim() === "") {
+            return res.status(400).json({ message: "Comment cannot be empty" });
+        }
+       
+        const newComment = await commentModel.create({
+            guide_id: id,
+            user_id: req.user._id,
+            comment_text, 
+        });
+
+        res.status(200).json({ message: "Comment added successfully", comment_text: newComment });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 
 export const likeGuide = async (req, res) => {
     const { id } = req.params;

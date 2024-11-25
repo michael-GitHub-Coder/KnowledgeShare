@@ -10,6 +10,7 @@ import { DeactivateUser,
         suspendAccount,
         updateUser,
         userAuth } from "../Controllers/UserController.js";
+import { commentGuide } from "../Controllers/GuideController.js";
 
 const router = express.Router();
 
@@ -22,6 +23,7 @@ router.put("/activate/:id",protect,activateUser);
 router.get("/getUserbyemail",protect,getUserByEmail);
 router.put("/suspend/:id",protect,suspendAccount);
 router.post("/logout",protect,logOutUser);
+
 // router.delete("/delete/:id",deleteUser);
 
 export default router;
