@@ -94,18 +94,48 @@ export const deleteGuide = async (req,res) =>{
     }
 }
 
-
-export const likeGuide = async (req,res) =>{
+export const likeGuide = async (req, res) => {
+    const { id } = req.params;
 
     try {
-        await likeModel.create({
+   
+        const existingLike = await likeModel.findOne({ user_id: req.user._id, guide_id: id });
+
+        if (existingLike) {
+            return res.status(400).json({ message: "Guide already liked" });
+        }
+
+        const newLike = await likeModel.create({
             user_id: req.user._id,
-        })
+            guide_id: id,
+        });
+
+        res.status(200).json({ message: "Guide liked", like: newLike });
     } catch (error) {
-        
+        res.status(500).json({ message: error.message });
     }
-    
-}
+};
+
+export const unlikeGuide = async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+       
+        const existingLike = await likeModel.findOne({ user_id: req.user._id, guide_id: id });
+
+        if (!existingLike) {
+            return res.status(400).json({ message: "Guide not liked yet" });
+        }
+
+        await likeModel.deleteOne({ user_id: req.user._id, guide_id: id });
+
+        res.status(200).json({ message: "Guide unliked successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 //TODO: the likes/dislikes and comments for every guides by login in users.
 //TODO: Establish the relationships between all the collections.
 //TODO: Top rated guides

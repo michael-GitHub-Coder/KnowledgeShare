@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/auth",userAuth);
 router.post("/add", createUser);
-router.get("/all",protect,getUser);
+router.get("/all",getUser);
 router.put("/update/:id",protect,updateUser);
 router.put("/deactivate/:id",protect,DeactivateUser);
 router.put("/activate/:id",protect,activateUser);

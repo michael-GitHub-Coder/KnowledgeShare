@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const LikeSchema = new mongoose.Schema({
   user_id: { 
