@@ -179,8 +179,53 @@ export const latestGuides = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+export const topRatedGuide = async (req, res) => {
+    try {
+       
+        const topLikedGuide = await likeModel.aggregate([
+            { $group: { _id: "$guide_id", totalLikes: { $sum: 1 } } }, 
+            { $sort: { totalLikes: -1 } }, 
+            { $limit: 1 } 
+        ]);
 
-//TODO: the likes/dislikes and comments for every guides by login in users.
-//TODO: Establish the relationships between all the collections.
-//TODO: Top rated guides
-//TODO: list of latest guides
+        if (!topLikedGuide.length) {
+            return res.status(404).json({ message: "No likes found for any guides." });
+        }
+
+        const guide = await Guide.findById(topLikedGuide[0]._id);
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        res.status(200).json({ guide, totalLikes: topLikedGuide[0].totalLikes });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+export const totGuideLikes = async (req, res) => {
+    const { id } = req.params; 
+
+    try {
+        
+        const guide = await Guide.findById(id).populate("comments.user_id", "name"); 
+
+        if (!guide) {
+            return res.status(404).json({ message: "Guide not found." });
+        }
+
+        const likeCount = await likeModel.countDocuments({ guide_id: id });
+
+        res.status(200).json({
+            guide,
+            totalLikes: likeCount
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
+
