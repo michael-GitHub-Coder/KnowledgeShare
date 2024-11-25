@@ -2,7 +2,8 @@ import Guide from "../Models/GuideModel.js";
 
 
 export const createGuide = async (req,res)=>{
-
+    
+   
     const {title,category,content,media} = req.body;
 
     if(!title || !content){
@@ -11,6 +12,7 @@ export const createGuide = async (req,res)=>{
 
     try {
          await Guide.create({
+            UserId: req.user._id,
             title,
             category,
             content,
@@ -18,7 +20,7 @@ export const createGuide = async (req,res)=>{
         });
         res.status(200).json({success:true,message:"Guide created",title:(await Guide.title),category:(await Guide.category) })
     } catch (error) {
-        res.status(400).json({success:false,message:error.message})
+        res.status(400).json({success:false,messgae:"failed",message:error.message})
     }
 
 }
@@ -60,6 +62,7 @@ export const updateGuide = async (req,res) =>{
 export const deleteGuide = async (req,res) =>{
 
     const {id} = req.params;
+    
     if(!id){
         res.status(203).json({success:false, message:"INVALID USER ID"});
     }
@@ -76,5 +79,7 @@ export const deleteGuide = async (req,res) =>{
     }
 }
 
-
-
+//TODO: the likes/dislikes and comments for every guides by login in users.
+//TODO: Establish the relationships between all the collections.
+//TODO: Top rated guides
+//TODO: list of latest guides

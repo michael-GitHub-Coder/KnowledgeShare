@@ -24,9 +24,14 @@ export const userAuth = async (req, res) => {
                         username: userExits.username,
                     });
                 }
+
             }else if(userExits.status === "Inactive"){
-                return res.status(200).json({
+                return res.status(401).json({
                     message:"User account is Inactive"
+                });
+            }else if(userExits.status === "Suspended"){
+                return res.status(401).json({
+                    messgae:"User accocunt suspended, Contact Admin."
                 });
             }
         }
@@ -67,6 +72,18 @@ export const createUser = async (req,res) =>{
     }
 }
 
+export const logOutUser = async (req,res) =>{
+
+    try {
+        res.cookies("jwt","",{
+            HttpOnly: true,
+            expires: new Date(0),
+        });
+        res.status(200).json({message:"User loged out"})
+    } catch (error) {
+        res.status(500).json({message:error.message});
+    }
+}
 
 export const getUser = async (req,res) =>{
     
