@@ -3,6 +3,7 @@ import { FaGreaterThan } from "react-icons/fa6";
 import { FaComments } from "react-icons/fa";
 import { MdOutlinePerson2 } from "react-icons/md";
 
+
 const Card = () => {
   return (
     <div className="flex justify-center mt-[100px] ">
