@@ -1,6 +1,7 @@
 import './App.css'
 import Login from './Components/Login'
 import Register from './Components/Register'
+import Footer from './Components/Footer'
 
 const App = () => {
 
@@ -8,6 +9,7 @@ const App = () => {
     <>
       {/* <Login /> */}
       {/* <Register /> */}
+      <Footer/>
     </>
   )
 }
