@@ -4,12 +4,22 @@ import { FaComments } from "react-icons/fa";
 import { MdOutlinePerson2 } from "react-icons/md";
 
 
-const Card = () => {
+type CardProps = {
+    image: string;
+    title: string;
+    content: string;
+  };
+  
+const Card = ({image,title,content}: CardProps) => {
+
+   const words = content.split(' '); 
+   const first13Words = words.slice(0, 13).join(' '); 
+
   return (
     <div className="flex justify-center mt-[100px] ">
       <div className="relative shadow-lg">
         <div className="relative bg-gray-100 w-[350px] h-[250px] mr-[10%]">
-          <img src="https://www.topgear.com/sites/default/files/2022/07/9_1.jpg" className="w-full h-full object-cover" />
+          <img src={image} className="w-full h-full object-cover" />
           <div className="absolute top-4 right-4 p-2  bg-opacity-50">
             <p className="bg-red-500 text-white font-bold px-2 py-2 text-center">28</p>
             <p className="bg-white text-black font-bold px-2 py-2 text-center">Nov</p>
@@ -20,8 +30,8 @@ const Card = () => {
                 <p className="flex gap-2"><MdOutlinePerson2 className="mt-1"/> Michael T.</p>
                 <p className="flex gap-2"><FaComments className="mt-1"/>Comments. (5)</p>
             </div>
-            <h1 className="py-4 font-bold text-black">Navigating Borders ULtimate Guide to Visa Success</h1>
-            <p className="pb-4">Navigating Borders ULtimate Guide to Visa Success, ULtimate Navigating Borders ULtimate Guide... </p>
+            <h1 className="py-4 font-bold text-black">{title}</h1>
+            <p className="pb-4">{first13Words}...</p>
             <p className="pb-4 flex gap-2 font-bold text-black">Read More <FaGreaterThan size={10} className="mt-2"/></p>
         </div>
       </div>
