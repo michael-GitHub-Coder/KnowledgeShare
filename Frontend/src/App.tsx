@@ -6,17 +6,17 @@ import Register from './Components/Register'
 const App = () => {
   const data = [
     {
-      "image": "https://www.topgear.com/sites/default/files/2022/07/9_1.jp",
+      "image": "https://4kwallpapers.com/images/wallpapers/bugatti-w16-mistral-sports-cars-ultimate-roadster-2024-4500x3000-9103.jpeg",
       "title": "The Ultimate Guide to React",
       "content": "Learn the fundamentals of React and how to build dynamic web applications using this popular JavaScript library."
     },
     {
-      "image": "https://www.topgear.com/sites/default/files/2022/07/9_1.jp",
+      "image": "https://4kwallpapers.com/images/wallpapers/bugatti-w16-mistral-sports-cars-ultimate-roadster-2024-4500x3000-9103.jpeg",
       "title": "Mastering JavaScript ES6",
       "content": "Dive deep into the new features of JavaScript ES6 and how they improve the development process."
     },
     {
-      "image": "https://www.topgear.com/sites/default/files/2022/07/9_1.jp",
+      "image": "https://4kwallpapers.com/images/wallpapers/bugatti-w16-mistral-sports-cars-ultimate-roadster-2024-4500x3000-9103.jpeg",
       "title": "Understanding TypeScript",
       "content": "A comprehensive guide to TypeScript, offering better code quality and development experience with its type system."
     }
