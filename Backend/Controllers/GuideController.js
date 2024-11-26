@@ -264,42 +264,40 @@ export const getGuideDetails = async (req, res) => {
 
 
 export const getGuideDetailsWithAllUsers = async (req, res) => {
-    const { id } = req.params; // Guide ID
+    const { id } = req.params; 
 
     try {
-        // Step 1: Fetch the guide details
+       
         const guide = await Guide.findById(id)
-            .populate("userId", "name email") // Populate the guide author details
+            .populate("userId", "name email") 
             .exec();
 
         if (!guide) {
             return res.status(404).json({ message: "Guide not found." });
         }
 
-        // Step 2: Fetch all comments for the guide with user details
+ 
         const comments = await Comment.find({ guide_id: id })
-            .populate("user_id", "name email") // Populate user details for comments
-            .populate("replies.user_id", "name email") // Populate user details for replies
+            .populate("user_id", "name email") 
+            .populate("replies.user_id", "name email") 
             .exec();
 
-        // Step 3: Fetch all likes for the guide with user details
         const likes = await likeModel.find({ guide_id: id })
-            .populate("user_id", "name email") // Populate user details for likes
+            .populate("user_id", "name email")
             .exec();
 
-        // Step 4: Collect all unique users from comments and likes
+   
         const usersFromComments = comments.map((comment) => comment.user_id);
         const usersFromLikes = likes.map((like) => like.user_id);
 
-        // Combine and remove duplicates
         const allUsers = [...new Map([...usersFromComments, ...usersFromLikes].map(user => [user._id, user])).values()];
 
-        // Step 5: Respond with the guide details, comments, likes, and unique users
+    
         res.status(200).json({
             guide,
             comments,
             likes,
-            allUsers // Contains all unique users who commented or liked
+            allUsers 
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
