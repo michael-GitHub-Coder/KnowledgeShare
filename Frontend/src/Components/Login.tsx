@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import logo from "../assets/logo.png"
+import { Link } from 'react-router-dom';
 
 
 interface LoginResponse {
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
                 throw new Error(errorData.message || 'Login failed');
             }
 
-            const data: LoginResponse = await response.json(); // Use LoginResponse to type the response
+            const data: LoginResponse = await response.json(); 
             console.log(data)
             // // Destructure nested `user` object and token
             // const { token, user: { _id, username, email: userEmail } } = data;
@@ -50,8 +51,11 @@ const Login: React.FC = () => {
     
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
-            <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-                <h1 className="text-2xl font-semibold text-gray-700 text-center mb-6">Login</h1>
+            <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full relative">
+                {/* <h1 className="text-2xl font-semibold text-gray-700 text-center mb-6">INFOSPHERE</h1> */}
+                <div className="flex justify-center">
+                    <img src={logo} className="h-32" />
+                </div>
                 <form onSubmit={handleLogin}>
                     <div className="mb-4">
                         <label className="block text-gray-700 font-medium mb-2">Email:</label>
@@ -77,9 +81,13 @@ const Login: React.FC = () => {
                         type="submit"
                         className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
                     >
-                        Login
+                        Sign in
                     </button>
                 </form>
+                <div className="flex gap-2 py-4 justify-center">
+                    <p>Don't have an account?</p>
+                    <p className="text-green-600"> Sign up here</p>
+                </div>
                 {message && <p className="text-center text-red-500 mt-4">{message}</p>}
             </div>
         </div>
