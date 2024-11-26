@@ -19,14 +19,14 @@ const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
 
 const Footer = () => {
   return (
-    <footer className="footer flex bg-gray-100 text-black p-14 items-end justify-center ">
+    <footer className="footer flex items-center justify-center bg-gray-100 text-black p-14  pb-4">
       <aside>
         <img 
           src={logo} 
           alt="" 
-          className="w-40 h-40 items-center"
+          className="w-40 h-40 bg-slate-400 "
         />
-        <p className="font-bold text-2xl ">
+        <p className="font-bold text-2xl pb-2">
           INFOSPHERE Industries Ltd.
           <br />
           Where ideas connect, knowledge grows
@@ -46,7 +46,7 @@ const Footer = () => {
 </div>
        
       </aside>
-      <form className='ml-12 p-4' onSubmit={handleSubmit}>
+      <form className='items-end justify-end p-4' onSubmit={handleSubmit}>
       <h6 className="text-2xl font-bold text-black">Newsletter</h6>
       <fieldset className="form-control w-80">
         <label className="label">
