@@ -1,9 +1,10 @@
 import './App.css'
 import Card from './Components/Card'
-import Dashboard from './Components/Dashboard'
+// import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Footer from './Components/Footer'
+import AddEditGuide from './Components/AddEditGuide'
 
 const App = () => {
   const data = [
@@ -26,19 +27,17 @@ const App = () => {
   
   return (
     <>
-      {/* <Login /> */}
-      {/* <Register /> */}
-<<<<<<< HEAD
-      <Footer/>
-=======
+      {/* <Login /> 
+       <Register /> */}
       {/* <div className="flex justify-center gap-8">
         {  data.map(data=>( 
             <Card image={data.image} title={data.title} content={data.content}/>
           ))  
         }
       </div> */}
-      <Dashboard />
->>>>>>> c9676bbdaa95a7c70ddf1ec6c2c1efee15bee4e6
+      {/* <Dashboard /> */}
+      {/* <Footer/> */}
+      <AddEditGuide/>
     </>
   )
 }
