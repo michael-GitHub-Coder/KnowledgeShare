@@ -1,10 +1,12 @@
 import './App.css'
+import Login from './Components/Login'
 
 const App = () => {
 
   return (
-    <p>
-    </p>
+    <>
+      <Login />
+    </>
   )
 }
 
