@@ -22,7 +22,7 @@ const Card = ({image,title,content}: CardProps) => {
           <img src={image} className="w-full h-full object-cover" />
           <div className="absolute top-4 right-4 p-2  bg-opacity-50">
             <p className="bg-red-500 text-white font-bold px-2 py-2 text-center">28</p>
-            <p className="bg-white text-black font-bold px-2 py-2 text-center">Nov</p>
+            <p className="bg-white text-black font-bold px-2 py-1 text-center">Nov</p>
           </div>
         </div>
         <div className="absolute bg-white h-[268px] w-[320px] top-[80%] -right-[10%] left-0 z-10 shadow-sm p-5 text-gray-500 px-5">

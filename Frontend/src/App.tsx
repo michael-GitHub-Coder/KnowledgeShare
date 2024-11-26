@@ -1,3 +1,4 @@
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import './App.css'
 import Card from './Components/Card'
 import Dashboard from './Components/Dashboard'
@@ -23,19 +24,31 @@ const App = () => {
     }
   ];
   
+
+  // const router = createBrowserRouter(
+  //   createRoutesFromElements(
+  //     <Route path="/" element={<Dashboard />}>
+        
+  //     </Route>
+  //   )
+  //  )
+
+
   return (
     <>
       {/* <Login /> */}
       {/* <Register /> */}
-      {/* <div className="flex justify-center gap-8">
+       <div className="flex justify-center gap-8">
         {  data.map(data=>( 
             <Card image={data.image} title={data.title} content={data.content}/>
           ))  
         }
-      </div> */}
-      <Dashboard />
+      </div> 
+        {/* <Dashboard />   */}
     </>
   )
+
+  // return (<RouterProvider router={router} />)
 }
 
 export default App
