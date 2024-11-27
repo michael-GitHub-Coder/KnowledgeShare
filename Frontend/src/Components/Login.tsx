@@ -38,7 +38,7 @@ const Login: React.FC = () => {
 
             const data: LoginResponse = await response.json(); 
             console.log(data)
-            // // Destructure nested `user` object and token
+
             const { _id, username, email: userEmail, role: userRole ,password:PC} = data;
             // console.log(`${_id} ${username} ${userEmail} ${userRole}`);
             localStorage.setItem('userId', _id);

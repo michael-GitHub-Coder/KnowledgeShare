@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 const ManageGuides = () => {
   const [guides, setGuides] = useState([]);
-  const [editGuide, setEditGuide] = useState(null); // Track the guide being edited
+  const [editGuide, setEditGuide] = useState(null); 
   const [guideData, setGuideData] = useState({
     title: "",
     category: "",
     content: "",
   });
 
-  // Fetch guides on component mount
+
   useEffect(() => {
     const fetchGuides = async () => {
       try {
@@ -25,7 +25,7 @@ const ManageGuides = () => {
     fetchGuides();
   }, []);
 
-  // Open edit form
+
   const handleEdit = (guide) => {
     setEditGuide(guide._id);
     setGuideData({
@@ -35,7 +35,7 @@ const ManageGuides = () => {
     });
   };
 
-  // Handle input change
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setGuideData((prevData) => ({
@@ -44,7 +44,7 @@ const ManageGuides = () => {
     }));
   };
 
-  // Submit updated guide
+
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
