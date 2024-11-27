@@ -21,7 +21,7 @@ const ManageUser = () => {
 
   useEffect(() => {
     getAllUsers();
-  }, []); // Only runs once when the component mounts
+  }, []); 
 
   const handleSuspend = async (id: string) => {
     console.log("Suspending user with id:", id);
@@ -38,7 +38,7 @@ const ManageUser = () => {
         throw new Error(`Failed to suspend user: ${res.statusText}`);
       }
 
-      // Re-fetch the user list after suspension
+    
       await getAllUsers();
       alert('User account Suspended');
     } catch (error: any) {
@@ -100,7 +100,7 @@ const ManageUser = () => {
               <td className="border border-gray-300 p-2">{user.username}</td>
               <td className="border border-gray-300 p-2">{user.role}</td>
               <td className="border border-gray-300 p-2">{user.status}</td>
-              <td className="border border-gray-300 p-2">
+              <td className="border border-gray-300 p-2 flex justify-center">
                 <button
                   onClick={() => {
                     setEditUser(user);
@@ -128,7 +128,7 @@ const ManageUser = () => {
         </tbody>
       </table>
 
-      {/* Edit User Form */}
+ 
       {editUser && (
         <div className="mt-4 p-4 border border-gray-200 rounded">
           <h3 className="font-semibold mb-2">Edit User</h3>
@@ -185,7 +185,7 @@ const ManageUser = () => {
               </select>
             </div>
             <button
-              type="submit"  // Changed to type="submit" to trigger form submission
+              type="submit"  
               className="bg-blue-500 text-white p-2 rounded"
             >
               Save Changes

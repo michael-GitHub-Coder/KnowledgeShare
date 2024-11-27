@@ -56,16 +56,18 @@ console.log(`${userId} ${username} ${userEmail} ${userRole}`);
                   <a className="cursor-pointer">Manage Guides</a>
                 </li>
               </Link>
+              <Link to={"/Dashboard/PlatformStats"} className="cursor-pointer">
                 <li className="py-4 px-8 ">
                   <a className="cursor-pointer">Platform Stats</a>
                 </li>
+              </Link>
               </ul>
             </>
             }
         </nav>
       </div>
 
-      {/* Main Content Area (Outlet) */}
+
       <div className="flex-1 p-6">
         <h1 className="text-2xl mb-10">Welcome to your Dashboard</h1>
         <Outlet />

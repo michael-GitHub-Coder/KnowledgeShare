@@ -8,6 +8,7 @@ import Article from './Components/Article'
 import HomePage from './pages/HomePage'
 import ManageUser from './Components/ManageUser'
 import ManageGuides from './Components/ManageGuides'
+import PlatformStats from './Components/PlatformStats'
 
 
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route index element={<h3>Dashboard Home</h3>} /> 
           <Route path="ManageUser" element={<ManageUser />} />
           <Route path="ManageGuides" element={<ManageGuides />} />
+          <Route path="PlatformStats" element={<PlatformStats />} />
         </Route>
         <Route path="/register" element={<Register />} />
       </>
