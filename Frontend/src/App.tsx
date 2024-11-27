@@ -5,6 +5,7 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import Footer from './Components/Footer'
 import AddEditGuide from './Components/AddEditGuide'
+import Analytics from './Components/Analytics'
 
 const App = () => {
   const data = [
@@ -37,7 +38,8 @@ const App = () => {
       </div> */}
       {/* <Dashboard /> */}
       {/* <Footer/> */}
-      <AddEditGuide/>
+      {/* <AddEditGuide/> */}
+      <Analytics/>
     </>
   )
 }
