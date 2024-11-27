@@ -8,9 +8,11 @@ type CardProps = {
     image: string;
     title: string;
     content: string;
+    totCom:string;
+    Author:string;
   };
   
-const Card = ({image,title,content}: CardProps) => {
+const Card = ({image,title,content,Author}: CardProps) => {
 
    const words = content.split(' '); 
    const first13Words = words.slice(0, 13).join(' '); 
@@ -25,9 +27,9 @@ const Card = ({image,title,content}: CardProps) => {
             <p className="bg-white text-black font-bold px-2 py-1 text-center">Nov</p>
           </div>
         </div>
-        <div className="absolute bg-white h-[268px] w-[320px] top-[80%] -right-[10%] left-0 z-10 shadow-sm p-5 text-gray-500 px-5">
+        <div className="absolute bg-white h-[268px] w-[320px] top-[80%]  -right-[10%] left-0 z-10 shadow-sm p-5 text-gray-500">
             <div className="flex gap-4 border-b border-b-gray-500 pb-1 ">
-                <p className="flex gap-2"><MdOutlinePerson2 className="mt-1"/> Michael T.</p>
+                <p className="flex gap-2"><MdOutlinePerson2 className="mt-1"/> {Author}</p>
                 <p className="flex gap-2"><FaComments className="mt-1"/>Comments. (5)</p>
             </div>
             <h1 className="py-4 font-bold text-black">{title}</h1>

@@ -20,7 +20,7 @@ console.log(`${userId} ${username} ${userEmail} ${userRole}`);
     <div className="flex">
 
       <div className="w-64 h-screen bg-gray-800 text-white">
-        <div className="py-4 px-8 text-xl">Dashboard</div>
+        <div className="py-4 px-8 text-xl"><Link to={"/Dashboard/Dash"} className="cursor-pointer">Dashboard</Link></div>
         <nav>
           
             {/* Expert */}
