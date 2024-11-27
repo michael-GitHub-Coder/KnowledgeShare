@@ -22,6 +22,7 @@ export const userAuth = async (req, res) => {
                         _id: userExits._id,
                         email: userExits.email,
                         username: userExits.username,
+                        role: userExits.role,
                     });
                 }
 

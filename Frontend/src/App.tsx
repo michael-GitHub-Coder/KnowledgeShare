@@ -5,6 +5,7 @@ import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Register from './Components/Register'
 import Article from './Components/Article'
+import HomePage from './pages/HomePage'
 
 const App = () => {
   const data = [
@@ -26,13 +27,15 @@ const App = () => {
   ];
   
 
-  // const router = createBrowserRouter(
-  //   createRoutesFromElements(
-  //     <Route path="/" element={<Dashboard />}>
-        
-  //     </Route>
-  //   )
-  //  )
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path="/" element={<Login />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<Register />} />
+      </>
+    )
+   )
 
 
   return (
@@ -46,11 +49,12 @@ const App = () => {
         }
       </div>  */}
         {/* <Dashboard />   */}
-        <Article />
+        {/* <Article /> */}
+        <RouterProvider router={router} />
     </>
+   
   )
 
-  // return (<RouterProvider router={router} />)
 }
 
 export default App
