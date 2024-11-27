@@ -1,11 +1,9 @@
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import './App.css'
 import Card from './Components/Card'
 // import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Register from './Components/Register'
-import Footer from './Components/Footer'
-import AddEditGuide from './Components/AddEditGuide'
-import Analytics from './Components/Analytics'
 
 const App = () => {
   const data = [
@@ -26,22 +24,38 @@ const App = () => {
     }
   ];
   
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path="/" element={<Login />} />
+        <Route path="/Dashboard" element={<Dashboard />}>
+          <Route index element={<h3>Dashboard Home</h3>} /> 
+          <Route path="ManageUser" element={<ManageUser />} />
+          <Route path="ManageGuides" element={<ManageGuides />} />
+          <Route path="PlatformStats" element={<PlatformStats />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+      </>
+    )
+  );
+
+
   return (
     <>
-      {/* <Login /> 
-       <Register /> */}
+      {/* <Login /> */}
+      {/* <Register /> */}
       {/* <div className="flex justify-center gap-8">
         {  data.map(data=>( 
             <Card image={data.image} title={data.title} content={data.content}/>
           ))  
         }
       </div> */}
-      {/* <Dashboard /> */}
-      {/* <Footer/> */}
-      {/* <AddEditGuide/> */}
-      <Analytics/>
+      <Dashboard />
     </>
+   
   )
+
 }
 
 export default App

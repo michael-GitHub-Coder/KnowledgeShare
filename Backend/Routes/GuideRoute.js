@@ -1,5 +1,5 @@
 import express from "express";
-import { commentGuide, createGuide, deleteGuide, getAllguides, getGuideDetails, getGuideDetailsWithAllUsers, latestGuides, likeGuide, topRatedGuide, totGuideLikes, unlikeGuide, updateGuide } from "../Controllers/GuideController.js";
+import { commentGuide, createGuide, deleteGuide, getAllguides, getGuideDetails, getGuideDetailsWithAllUsers, guideandNames, latestGuides, likeGuide, topRatedGuide, totGuideLikes, unlikeGuide, updateGuide } from "../Controllers/GuideController.js";
 import protect from "../Middleware/authMidware.js"
 
 const router = express.Router();
@@ -16,5 +16,6 @@ router.get("/topRated",topRatedGuide);
 router.get("/totLikes/:id",totGuideLikes);
 router.get("/getGuideDetails/:id",getGuideDetails);
 router.get("/UsersWithComments/:id",getGuideDetailsWithAllUsers);
+router.get("/guideandnames", guideandNames)
 
 export default router;

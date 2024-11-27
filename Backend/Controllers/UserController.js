@@ -22,6 +22,8 @@ export const userAuth = async (req, res) => {
                         _id: userExits._id,
                         email: userExits.email,
                         username: userExits.username,
+                        role: userExits.role,
+                        password: userExits.password,
                     });
                 }
 
@@ -106,15 +108,15 @@ export const updateUser = async (req,res) =>{
     const newUser = req.body;
 
     if(!newUser.email || !newUser.password){
-        res.status(203).json({success:false,message:"All fields muust be filled"})
+        return res.status(203).json({success:false,message:"All fields muust be filled"})
     }
 
     try {
         const wUser = await User.findByIdAndUpdate(id,newUser);
         if(wUser){
-            res.status(200).json({success:true,messgae:"User updated", User:newUser});
+           return res.status(200).json({success:true,messgae:"User updated", User:newUser});
         }else{
-            res.status(200).json({success:false,messgae:"failed to update user"});
+            return res.status(404).json({success:false,messgae:"failed to update user"});
         }
     } catch (error) {
         res.status(400).json({success:false,message:error.message})

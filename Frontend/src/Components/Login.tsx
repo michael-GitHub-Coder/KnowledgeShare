@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import logo from "../assets/logo.png"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface LoginResponse {
-    token: string;
-    user: {
-        _id: string;
-        username: string;
-        email: string;
-    };
+   
+    _id: string;
+    username: string;
+    email: string;
+    role:string;
+    password:string;
 }
 
 const Login: React.FC = () => {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [message, setMessage] = useState<string>("");
@@ -37,13 +39,15 @@ const Login: React.FC = () => {
             const data: LoginResponse = await response.json(); 
             console.log(data)
             // // Destructure nested `user` object and token
-            // const { token, user: { _id, username, email: userEmail } } = data;
+            const { _id, username, email: userEmail, role: userRole ,password:PC} = data;
+            // console.log(`${_id} ${username} ${userEmail} ${userRole}`);
+            localStorage.setItem('userId', _id);
+            localStorage.setItem('username', username); 
+            localStorage.setItem('userEmail', userEmail);
+            localStorage.setItem('userRole', userRole);
+            localStorage.setItem('PC', PC);
 
-            // if (token) {
-            //     localStorage.setItem('authToken', token);
-            // }
-
-            setMessage("Welcome");
+            navigate("/Dashboard")
         } catch (error: any) {
             setMessage(error.message || 'Login failed');
         }
@@ -86,7 +90,7 @@ const Login: React.FC = () => {
                 </form>
                 <div className="flex gap-2 py-4 justify-center">
                     <p>Don't have an account?</p>
-                    <p className="text-green-600"> Sign up here</p>
+                    <Link to={"/register"}><p className="text-green-600"> Sign up here</p></Link>
                 </div>
                 {message && <p className="text-center text-red-500 mt-4">{message}</p>}
             </div>

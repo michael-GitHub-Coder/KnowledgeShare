@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -132,6 +133,10 @@ const Register = () => {
                         Sign up
                     </button>
                 </form>
+                <div className="flex gap-2 py-4 justify-center">
+                    {/* <p>Don't have an account?</p> */}
+                    <Link to={"/login"}><p className="text-green-600"> Sign in here</p></Link>
+                </div>
             </div>
         </div>
     );
