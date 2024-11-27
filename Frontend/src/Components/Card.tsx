@@ -16,7 +16,7 @@ const Card = ({image,title,content,Author}: CardProps) => {
 
    const words = content.split(' '); 
    const first13Words = words.slice(0, 13).join(' '); 
-
+  console.log(image)
   return (
     <div className="flex justify-center mt-[100px] ">
       <div className="relative shadow-lg">
