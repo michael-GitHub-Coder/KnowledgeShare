@@ -51,9 +51,11 @@ console.log(`${userId} ${username} ${userEmail} ${userRole}`);
                   Manage Users
                 </li>
               </Link>
+              <Link to={"/Dashboard/ManageGuides"} className="cursor-pointer">
                 <li className="py-4 px-8 ">
                   <a className="cursor-pointer">Manage Guides</a>
                 </li>
+              </Link>
                 <li className="py-4 px-8 ">
                   <a className="cursor-pointer">Platform Stats</a>
                 </li>

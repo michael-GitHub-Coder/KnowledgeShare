@@ -7,6 +7,9 @@ import Register from './Components/Register'
 import Article from './Components/Article'
 import HomePage from './pages/HomePage'
 import ManageUser from './Components/ManageUser'
+import ManageGuides from './Components/ManageGuides'
+
+
 
 const App = () => {
   const data = [
@@ -35,6 +38,7 @@ const App = () => {
         <Route path="/Dashboard" element={<Dashboard />}>
           <Route index element={<h3>Dashboard Home</h3>} /> 
           <Route path="ManageUser" element={<ManageUser />} />
+          <Route path="ManageGuides" element={<ManageGuides />} />
         </Route>
         <Route path="/register" element={<Register />} />
       </>
