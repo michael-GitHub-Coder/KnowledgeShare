@@ -2,21 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Profile: React.FC = () => {
-  const userId = localStorage.getItem('userId'); // User ID from localStorage
-  const Localusername = localStorage.getItem('username'); // Username from localStorage
+  const userId = localStorage.getItem('userId'); 
+  const Localusername = localStorage.getItem('username');
   const userEmail = localStorage.getItem('userEmail'); 
-  const PC = localStorage.getItem("PC");// User Email from localStorage
-
+  const PC = localStorage.getItem("PC"); 
   const [user, setUser] = useState<{ username: string; email: string } | null>(null);
   const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(false); // To toggle between view/edit mode
-  const [formData, setFormData] = useState<{ username: string; email: string; password:PC }>({
+  const [isEditing, setIsEditing] = useState(false); 
+  const [formData, setFormData] = useState<{ username: string; email: string; password: string }>({
     username: Localusername || '',
     email: userEmail || '',
-    password:PC || '',
+    password: PC || '',
   });
 
-  // Fetch user profile on component mount
   useEffect(() => {
     const fetchProfile = async () => {
       if (!userId) {
@@ -29,7 +27,7 @@ const Profile: React.FC = () => {
         setFormData({
           username: data.username || Localusername || '',
           email: data.email || userEmail || '',
-          password: PC,
+          password: PC || '',
         });
       } catch (err: any) {
         setError(err.response?.data?.message || 'Failed to fetch profile');
@@ -38,23 +36,19 @@ const Profile: React.FC = () => {
 
     fetchProfile();
 
-    // Cleanup function if the component is unmounted
     return () => setUser(null);
-  }, [userId, Localusername, userEmail]); // Dependency on userId, username, and userEmail
+  }, [userId, Localusername, userEmail]); 
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value, // Use 'name' here to match the input name attributes
+      [name]: value, 
     });
   };
 
-  // Handle save profile
+ 
   const handleSave = async () => {
-
-    // console.log(formData)
     if (!userId) {
       setError('User ID is required to update profile.');
       return;
@@ -64,44 +58,52 @@ const Profile: React.FC = () => {
         `http://localhost:3001/api/v1/user/update/${userId}`,
         formData
       );
-      // Update user state with the new data
-      console.log(data.User)
+    
       setUser(data);
-      setIsEditing(false); // Close the edit form
+      setIsEditing(false); 
 
-      // Update localStorage with new values
       localStorage.setItem('username', data.User.username);
       localStorage.setItem('userEmail', data.User.email);
 
-      // Optionally update the form data to reflect the saved data
       setFormData({
         username: formData.username,
         email: formData.email,
-        password:PC,
+        password: PC || '',
       });
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to update profile');
     }
   };
 
-  // Handle cancel edit
   const handleCancel = () => {
-    setIsEditing(false); // Close the edit form without saving
+    setIsEditing(false); 
     setFormData({
       username: user?.username || Localusername || '',
       email: user?.email || userEmail || '',
-      password:PC,
-    }); // Reset form data to initial state
+      password: PC || '',
+    }); 
   };
 
-//   const handleDeActivate = () =>{
+  const handleDeActivate = async () => {
+    if (!userId) {
+      setError('User ID is required to deactivate account.');
+      return;
+    }
+    try {
+      
+      await axios.post(`http://localhost:3001/api/v1/user/deactivate/${PC}`);
 
-//     const de
-//     useEffect(()=>{
-
-//     },[])
-//   }
-
+      localStorage.removeItem('userId');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('PC');
+      setUser(null);
+      setError('Your account has been deactivated.');
+    } catch (err: any) {
+      console.error(err);  
+      setError(err.response?.data?.message || 'Failed to deactivate account');
+    }
+  };
   return (
     <div className="max-w-4xl mx-auto p-6 mt-10 bg-slate-300 shadow-lg rounded-md">
       <h2 className="text-2xl font-bold text-blue-700 mb-6">Profile</h2>
@@ -114,16 +116,16 @@ const Profile: React.FC = () => {
               <p className="text-lg">Email: {userEmail}</p>
               <div className="flex justify-between">
                 <button
-                    onClick={() => setIsEditing(true)}
-                    className="mt-4 px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600"
+                  onClick={() => setIsEditing(true)}
+                  className="mt-4 px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600"
                 >
-                    Edit
+                  Edit
                 </button>
                 <button
-                    // onClick={() handleDeActivate()}
-                    className="mt-4 px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600"
+                  onClick={handleDeActivate}
+                  className="mt-4 px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600"
                 >
-                    Deactive
+                  Deactivate
                 </button>
               </div>
             </div>
