@@ -6,6 +6,7 @@ import Login from './Components/Login'
 import Register from './Components/Register'
 import Article from './Components/Article'
 import HomePage from './pages/HomePage'
+import ManageUser from './Components/ManageUser'
 
 const App = () => {
   const data = [
@@ -31,11 +32,14 @@ const App = () => {
     createRoutesFromElements(
       <>
         <Route path="/" element={<Login />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Dashboard" element={<Dashboard />}>
+          <Route index element={<h3>Dashboard Home</h3>} /> 
+          <Route path="ManageUser" element={<ManageUser />} />
+        </Route>
         <Route path="/register" element={<Register />} />
       </>
     )
-   )
+  );
 
 
   return (
