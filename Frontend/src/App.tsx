@@ -1,5 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import './App.css'
+
+import HeroSection from "./components/HeroSection.tsx";
 import Card from './Components/Card'
 import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
@@ -35,6 +37,11 @@ const App = () => {
 
 
   return (
+
+    <p>
+      <HeroSection/>
+    </p>
+
     <>
       {/* <Login /> */}
       {/* <Register /> */}
@@ -46,6 +53,7 @@ const App = () => {
       </div> 
         {/* <Dashboard />   */}
     </>
+
   )
 
   // return (<RouterProvider router={router} />)
