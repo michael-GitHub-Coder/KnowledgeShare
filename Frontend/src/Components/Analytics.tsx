@@ -18,7 +18,7 @@ import {
     ];
   
     return (
-      <div className="p-5 w-1/2">
+      <div className="p-5  bg-gray-100 ">
         <h2 className="text-4xl font-bold mb-6">ANALYTICS</h2>
   
         {/* Line Chart Section */}
@@ -27,7 +27,7 @@ import {
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={data}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
+              <XAxis className='font-bold' dataKey="name" />
               <YAxis />
               <Tooltip />
               <Legend />
@@ -40,11 +40,11 @@ import {
   
         {/* Table Section */}
         <div>
-          <h3 className="text-2xl font-bold mb-4">Guide Interaction Table</h3>
+          <h3 className="text-3xl font-bold mb-4">GUIDE INTERACTION TABLE</h3>
           <table className="table-auto w-full border-collapse border border-gray-300">
             <thead>
               <tr className="bg-gray-200 text-left">
-                <th className="border border-gray-300 px-4 py-2">Guide</th>
+                <th className="border border-gray-300 px-4 py-2 ">Guide</th>
                 <th className="border border-gray-300 px-4 py-2">Views</th>
                 <th className="border border-gray-300 px-4 py-2">Likes</th>
                 <th className="border border-gray-300 px-4 py-2">Comments</th>
