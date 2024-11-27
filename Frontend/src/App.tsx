@@ -4,6 +4,7 @@ import Card from './Components/Card'
 import Dashboard from './Components/Dashboard'
 import Login from './Components/Login'
 import Register from './Components/Register'
+import Article from './Components/Article'
 
 const App = () => {
   const data = [
@@ -38,13 +39,14 @@ const App = () => {
     <>
       {/* <Login /> */}
       {/* <Register /> */}
-       <div className="flex justify-center gap-8">
+       {/* <div className="flex justify-center gap-8">
         {  data.map(data=>( 
             <Card image={data.image} title={data.title} content={data.content}/>
           ))  
         }
-      </div> 
+      </div>  */}
         {/* <Dashboard />   */}
+        <Article />
     </>
   )
 
