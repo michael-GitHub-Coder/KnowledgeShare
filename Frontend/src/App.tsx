@@ -10,6 +10,9 @@ import ManageUser from './Components/ManageUser'
 import ManageGuides from './Components/ManageGuides'
 import PlatformStats from './Components/PlatformStats'
 import Dash from './Components/Dash'
+import Analytics from './Components/Analytics'
+import AddEditGuide from './Components/AddEditGuide'
+import Profile from './Components/Profile'
 
 
 
@@ -42,6 +45,9 @@ const App = () => {
           <Route path="ManageUser" element={<ManageUser />} />
           <Route path="ManageGuides" element={<ManageGuides />} />
           <Route path="PlatformStats" element={<PlatformStats />} />
+          <Route path="Analytics" element={<Analytics />}/>
+          <Route path="AddEditGuides" element={<AddEditGuide />}/>
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="/register" element={<Register />} />
       </>

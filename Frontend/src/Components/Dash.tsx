@@ -18,7 +18,7 @@ const Dash = () => {
 
   return (
     <div>
-        <p>Lates guides</p>
+        <p className="px-5">Lates guides</p>
         <div className="grid grid-cols-4 -mt-20">
         {  guides.map(data=>( 
             <Card image={data.media} title={data.title} content={data.content} Author={data.userId.username} />

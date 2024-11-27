@@ -83,7 +83,7 @@ export const deleteGuide = async (req,res) =>{
         res.status(203).json({success:false, message:"INVALID USER ID"});
     }
     try {
-        const deletedGuide = await Guide.findByIdandDelete(id);
+        const deletedGuide = await Guide.findByIdAndDelete(id);
         if(deletedGuide){
             res.status(200).json({success:true,message:"Guide deleted ", Guide:deleteGuide});
             //TODO: what happens after the guide is deleted by the expert or author? Do we delete it completely or we create a new collection to save the deleted in?
@@ -405,6 +405,37 @@ export const getGuideInfo = async (req, res) => {
     } catch (error) {
       console.error('Error getting guide info:', error);
       res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  export const getGuidesWithDetails = async () => {
+    try {
+      const guides = await Guide.find()
+        .populate({
+          path: "likes", // Populate likes
+          populate: {
+            path: "user_id", // Nested populate user in likes
+            select: "username email", // Adjust fields as necessary
+          },
+        })
+        .populate({
+          path: "comments", // Populate comments
+          populate: {
+            path: "user_id", // Populate user for comments
+            select: "username email",
+          },
+        })
+        .populate({
+          path: "comments", // Populate comments again for nested replies
+          populate: {
+            path: "replies.user_id", // Nested populate user in replies
+            select: "username email",
+          },
+        });
+      return guides;
+    } catch (error) {
+      console.error("Error fetching guides with details:", error.message);
+      throw error;
     }
   };
   

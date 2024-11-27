@@ -27,16 +27,22 @@ console.log(`${userId} ${username} ${userEmail} ${userRole}`);
             { userRole === "Expert" &&
               <ul>
                 <>
+                
+                <Link to={"/Dashboard/AddEditGuides"} className="cursor-pointer">
                   <li className="py-4 px-8 ">
                     <a className="cursor-pointer">Manage Guides</a>
                   </li>
+                </Link>
+                <Link to={"/Dashboard/Analytics"} className="cursor-pointer">
                   <li className="py-4 px-8 ">
                     <a className="cursor-pointer">Analytics</a>
                   </li>
+                </Link>
+                <Link to={"/Dashboard/profile"} className="cursor-pointer">
                   <li className="py-4 px-8 ">
                     <a className="cursor-pointer">Profile Settings</a>
                   </li>
-                
+                </Link>
                 </>
              </ul>
             }
@@ -69,8 +75,10 @@ console.log(`${userId} ${username} ${userEmail} ${userRole}`);
 
 
       <div className="flex-1 p-6">
-        <h1 className="text-2xl mb-10">Welcome to your Dashboard</h1>
-        <Outlet />
+        <h1 className="text-2xl mb-10 px-5">Welcome to {userRole} Dashboard</h1>
+        <div className="px-5">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
