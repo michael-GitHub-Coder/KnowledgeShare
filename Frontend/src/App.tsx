@@ -61,13 +61,11 @@ const App = () => {
         }
       </div> */}
       {/* <Dashboard /> */}
-      <Analytics/>
+      {/* <Analytics/>
       <AddEditGuide/>
       <Footer/>
-    </>
+    </> */}
    
-  )
 
-}
 
 export default App
