@@ -4,17 +4,18 @@ import commentModel from "../Models/Comments.js";
 import Comment from "../Models/Comments.js";
 
 export const createGuide = async (req, res) => {
-    const { title, category, content, media } = req.body;
+    const { title, category, content, media,userId } = req.body;
 
   
-    if (!title || !content) {
+    if (!title || !content || !category || !media) {
         return res.status(400).json({ success: false, message: "Please fill all the fields." });
     }
- 0
+ 
     try {
      
         const guide = await Guide.create({
-            userId: req.user._id, 
+            // userId: req.user?._id, 
+            userId,
             title,
             category,
             content,

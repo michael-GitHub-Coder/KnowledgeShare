@@ -4,13 +4,13 @@ import protect from "../Middleware/authMidware.js"
 
 const router = express.Router();
 
-router.post("/add",protect,createGuide);
+router.post("/add",createGuide);
 router.get("/all",getAllguides);
 router.put("/update/:id",updateGuide);
 router.delete("/delete/:id", deleteGuide);
 router.post("/like/:id",likeGuide);
 router.post("/unlike/:id",unlikeGuide);
-router.post("/comment/:id",protect,commentGuide);
+router.post("/comment/:id",commentGuide);
 router.get("/latestGuides",latestGuides);
 router.get("/topRated",topRatedGuide);
 router.get("/totLikes/:id",totGuideLikes);
