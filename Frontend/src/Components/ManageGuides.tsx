@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 
 const ManageGuides = () => {
   const [guides, setGuides] = useState([]);
-  const [editGuide, setEditGuide] = useState(null); 
+  const [editGuide, setEditGuide] = useState(null);
   const [guideData, setGuideData] = useState({
     title: "",
     category: "",
     content: "",
   });
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 12; // Number of rows to display per page
 
   useEffect(() => {
     const fetchGuides = async () => {
@@ -25,7 +26,6 @@ const ManageGuides = () => {
     fetchGuides();
   }, []);
 
-
   const handleEdit = (guide) => {
     setEditGuide(guide._id);
     setGuideData({
@@ -35,7 +35,6 @@ const ManageGuides = () => {
     });
   };
 
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setGuideData((prevData) => ({
@@ -43,7 +42,6 @@ const ManageGuides = () => {
       [name]: value,
     }));
   };
-
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -77,13 +75,15 @@ const ManageGuides = () => {
     }
   };
 
-  // Delete guide
   const handleDelete = async (userId) => {
-    const confirmDelete = window.confirm(`Are you sure you want to delete this guide? ${userId}`);
+    const confirmDelete = window.confirm(
+      `Are you sure you want to delete this guide? ${userId}`
+    );
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3001/api/v1/guide/delete/${userId}`,
+      const response = await fetch(
+        `http://localhost:3001/api/v1/guide/delete/${userId}`,
         {
           method: "DELETE",
         }
@@ -104,6 +104,17 @@ const ManageGuides = () => {
     }
   };
 
+  const totalPages = Math.ceil(guides.length / rowsPerPage);
+
+  const displayedGuides = guides.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div>
       <table className="table-auto w-full border-collapse">
@@ -116,7 +127,7 @@ const ManageGuides = () => {
           </tr>
         </thead>
         <tbody>
-          {guides.map((guide) => (
+          {displayedGuides.map((guide) => (
             <tr key={guide._id}>
               <td className="border px-4 py-2">{guide.title}</td>
               <td className="border px-4 py-2">{guide.userId?.username}</td>
@@ -139,6 +150,22 @@ const ManageGuides = () => {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-3 py-1 mx-1 rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
       {editGuide && (
         <div className="mt-4 p-4 border border-gray-200 rounded">
