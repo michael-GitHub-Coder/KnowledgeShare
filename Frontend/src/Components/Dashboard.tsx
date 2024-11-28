@@ -12,11 +12,11 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  // Log out handler
+ 
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/user/logout", {
-        method: 'POST', // Assuming there's a logout endpoint
+        method: 'POST', 
       });
 
       if (!response.ok) {
@@ -24,14 +24,13 @@ const Dashboard = () => {
         throw new Error(errorData.message || 'Logout failed');
       }
 
-      // Clear localStorage
+     
       localStorage.removeItem('userId');
       localStorage.removeItem('username');
       localStorage.removeItem('userEmail');
       localStorage.removeItem('userRole');
-      localStorage.removeItem('PC'); // Correcting the typo here
+      localStorage.removeItem('PC'); 
 
-      // Redirect to the home page
       navigate('/');
     } catch (error) {
       console.error(error.message || 'Logout failed');
