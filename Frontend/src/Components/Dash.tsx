@@ -14,14 +14,18 @@ const Dash = () => {
     fetchGuides();
   }, []);
 
-  console.log(guides)
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "June",
+    "July", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
 
   return (
     <div>
         <p className="px-5">Lates guides</p>
         <div className="grid grid-cols-4 -mt-20">
         {  guides.map(data=>( 
-            <Card image={data.media} title={data.title} content={data.content} Author={data.userId.username} />
+          
+            <Card image={data.media} title={data.title} content={data.content} Author={data.userId.username} day={data.createdAt.substring(8,10)} month={months[parseInt(data.createdAt.substring(5, 7), 10) - 1]}/>
           )).slice(0,4)
         }
       </div> 

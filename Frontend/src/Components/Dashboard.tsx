@@ -88,7 +88,7 @@ const Dashboard = () => {
 
       <div className="flex-1 p-6 bg-gray-100">
         <div className="flex justify-between px-5">
-          <h1 className="text-2xl mb-10">Welcome to {userRole} Dashboard</h1>
+          <h1 className="text-2xl mb-10 font-semibold">Welcome to {userRole} Dashboard</h1>
           <div className="flex gap-2 relative">
             {username && <MdOutlinePerson2 className="mt-1" size={20} />}
             <p className="cursor-pointer font-semibold" onClick={toggleDropdown}>
