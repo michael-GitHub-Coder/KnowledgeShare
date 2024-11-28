@@ -2,10 +2,19 @@ import React, { useEffect, useState } from 'react';
 
 const ManageUser = () => {
   const [AllUsers, setAllusers] = useState<any[]>([]);
-  const [editUser, setEditUser] = useState<any>(null); 
+  const [editUser, setEditUser] = useState<any>(null);
   const PC = localStorage.getItem("PC");
-  const [userData, setUserData] = useState({ email: "", username: "", role: "", status: "", password:PC }); 
-  
+  const [userData, setUserData] = useState({
+    email: "",
+    username: "",
+    role: "",
+    status: "",
+    password: PC,
+  });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
   const getAllUsers = async () => {
     try {
       const res = await fetch("http://localhost:3001/api/v1/user/all");
@@ -13,7 +22,7 @@ const ManageUser = () => {
         throw new Error(`Failed to fetch: ${res.statusText}`);
       }
       const data = await res.json();
-      setAllusers(data.User); 
+      setAllusers(data.User);
     } catch (error: any) {
       console.error("Failed to fetch users:", error);
     }
@@ -21,42 +30,44 @@ const ManageUser = () => {
 
   useEffect(() => {
     getAllUsers();
-  }, []); 
+  }, []);
 
   const handleSuspend = async (id: string) => {
     console.log("Suspending user with id:", id);
     try {
       const res = await fetch(`http://localhost:3001/api/v1/user/suspend/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status: 'Suspended' }),  
+        body: JSON.stringify({ status: "Suspended" }),
       });
 
       if (!res.ok) {
         throw new Error(`Failed to suspend user: ${res.statusText}`);
       }
 
-    
       await getAllUsers();
-      alert('User account Suspended');
+      alert("User account Suspended");
     } catch (error: any) {
-      console.error('Error suspending user:', error);
+      console.error("Error suspending user:", error);
     }
   };
 
   const handleEditSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); 
+    e.preventDefault();
     console.log(userData);
     try {
-      const res = await fetch(`http://localhost:3001/api/v1/user/update/${editUser._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData), 
-      });
+      const res = await fetch(
+        `http://localhost:3001/api/v1/user/update/${editUser._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        }
+      );
 
       if (!res.ok) {
         throw new Error(`Failed to update user: ${res.statusText}`);
@@ -68,11 +79,11 @@ const ManageUser = () => {
         prevUsers.map((user) => (user._id === updatedUser._id ? updatedUser : user))
       );
 
-      setEditUser(null); 
-      setUserData({ email: '', username: '', role: '', status: '' ,password:PC}); 
-      await getAllUsers(); 
+      setEditUser(null);
+      setUserData({ email: "", username: "", role: "", status: "", password: PC });
+      await getAllUsers();
     } catch (error: any) {
-      console.error('Error updating user:', error);
+      console.error("Error updating user:", error);
     }
   };
 
@@ -80,6 +91,19 @@ const ManageUser = () => {
     const { name, value } = e.target;
     setUserData({ ...userData, [name]: value });
   };
+
+  const totalPages = Math.ceil(AllUsers.length / itemsPerPage);
+
+  const handlePageChange = (page: number) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const displayedUsers = AllUsers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <div className="overflow-x-auto">
@@ -94,7 +118,7 @@ const ManageUser = () => {
           </tr>
         </thead>
         <tbody>
-          {AllUsers.map((user) => (
+          {displayedUsers.map((user) => (
             <tr key={user._id}>
               <td className="border border-gray-300 p-2">{user.email}</td>
               <td className="border border-gray-300 p-2">{user.username}</td>
@@ -109,15 +133,15 @@ const ManageUser = () => {
                       username: user.username,
                       role: user.role,
                       status: user.status,
-                      password:PC,
+                      password: PC,
                     });
                   }}
-                  className="mr-2 bg-blue-500 text-white p-1 rounded"
+                  className="mr-2 bg-gray-700 text-white p-1 rounded"
                 >
                   Edit
                 </button>
                 <button
-                  onClick={() => handleSuspend(user._id)} 
+                  onClick={() => handleSuspend(user._id)}
                   className="bg-red-500 text-white p-1 rounded"
                 >
                   Suspend
@@ -128,7 +152,38 @@ const ManageUser = () => {
         </tbody>
       </table>
 
- 
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className={`px-3 py-1 mx-1 rounded ${
+            currentPage === 1 ? "bg-gray-300" : "bg-gray-600 text-white"
+          }`}
+        >
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-3 py-1 mx-1 rounded ${
+              currentPage === index + 1 ? "bg-gray-700 text-white" : "bg-gray-600 text-white"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className={`px-3 py-1 mx-1 rounded ${
+            currentPage === totalPages ? "bg-gray-300" : "bg-gray-600 text-white"
+          }`}
+        >
+          Next
+        </button>
+      </div>
+
       {editUser && (
         <div className="mt-4 p-4 border border-gray-200 rounded">
           <h3 className="font-semibold mb-2">Edit User</h3>
@@ -185,8 +240,8 @@ const ManageUser = () => {
               </select>
             </div>
             <button
-              type="submit"  
-              className="bg-blue-500 text-white p-2 rounded"
+              type="submit"
+              className="bg-gray-700 text-white p-2 rounded"
             >
               Save Changes
             </button>

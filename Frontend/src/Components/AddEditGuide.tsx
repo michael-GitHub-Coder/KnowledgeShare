@@ -152,10 +152,16 @@ const AddEditGuide = () => {
 
   return (
     <div>
-      <div className="pb-4 flex justify-end">
+      <div className="pb-4 flex justify-end gap-2">
         <button
           onClick={() => setShowAddForm(true)}
-          className="px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600"
+          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-slate-600"
+        >
+          Refresh
+        </button>
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-slate-600"
         >
           Add Guide
         </button>
@@ -179,7 +185,7 @@ const AddEditGuide = () => {
               <td className="border px-4 py-2 flex justify-center">
                 <button
                   onClick={() => handleEdit(guide)}
-                  className="bg-blue-500 text-white py-1 px-3 rounded"
+                  className="bg-gray-700 text-white py-1 px-3 rounded"
                 >
                   Edit
                 </button>
@@ -233,7 +239,7 @@ const AddEditGuide = () => {
                 required
               />
             </div>
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+            <button type="submit" className="bg-gray-700 text-white p-2 rounded">
               Save Changes
             </button>
           </form>

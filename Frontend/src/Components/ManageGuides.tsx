@@ -135,7 +135,7 @@ const ManageGuides = () => {
               <td className="border px-4 py-2 flex justify-center">
                 <button
                   onClick={() => handleEdit(guide)}
-                  className="bg-blue-500 text-white py-1 px-3 rounded"
+                  className="bg-gray-700 text-white py-1 px-3 rounded"
                 >
                   Edit
                 </button>
@@ -158,7 +158,7 @@ const ManageGuides = () => {
             onClick={() => handlePageChange(index + 1)}
             className={`px-3 py-1 mx-1 rounded ${
               currentPage === index + 1
-                ? "bg-blue-500 text-white"
+                ? "bg-gray-700 text-white"
                 : "bg-gray-200"
             }`}
           >
@@ -206,7 +206,7 @@ const ManageGuides = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded"
+              className="bg-gray-700 text-white p-2 rounded"
             >
               Save Changes
             </button>
