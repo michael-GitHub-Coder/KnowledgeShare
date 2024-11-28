@@ -66,5 +66,9 @@ import {
     );
   };
   
+<<<<<<< HEAD
   export default Analytics;
   
+=======
+  export default Analytics;
+>>>>>>> a507c2560465b8e5952026f55954e244783113f1

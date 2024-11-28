@@ -4,17 +4,18 @@ import commentModel from "../Models/Comments.js";
 import Comment from "../Models/Comments.js";
 
 export const createGuide = async (req, res) => {
-    const { title, category, content, media } = req.body;
+    const { title, category, content, media,userId } = req.body;
 
   
-    if (!title || !content) {
+    if (!title || !content || !category || !media) {
         return res.status(400).json({ success: false, message: "Please fill all the fields." });
     }
- 0
+ 
     try {
      
         const guide = await Guide.create({
-            userId: req.user._id, 
+            // userId: req.user?._id, 
+            userId,
             title,
             category,
             content,
@@ -83,7 +84,7 @@ export const deleteGuide = async (req,res) =>{
         res.status(203).json({success:false, message:"INVALID USER ID"});
     }
     try {
-        const deletedGuide = await Guide.findByIdandDelete(id);
+        const deletedGuide = await Guide.findByIdAndDelete(id);
         if(deletedGuide){
             res.status(200).json({success:true,message:"Guide deleted ", Guide:deleteGuide});
             //TODO: what happens after the guide is deleted by the expert or author? Do we delete it completely or we create a new collection to save the deleted in?
@@ -161,21 +162,42 @@ export const unlikeGuide = async (req, res) => {
     }
 };
 
-export const latestGuides = async (req, res) => {
+// export const latestGuides = async (req, res) => {
 
-    let sortedByLatestDate = [];
+//     let sortedByLatestDate = [];
 
-    try {
+//     try {
        
-        const latestGuides = await Guide.find();
+//         const latestGuides = await Guide.find();
         
-        if (latestGuides) {
-            sortedByLatestDate = [...latestGuides].sort(
-                (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-            );
-        }
+//         if (latestGuides) {
+//             sortedByLatestDate = [...latestGuides].sort(
+//                 (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+//             );
+//         }
 
-        res.status(200).json({message:"latest guides", sortedByLatestDate });
+//         res.status(200).json({message:"latest guides", sortedByLatestDate });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
+
+// Fetch latest guides and populate userID with username
+export const latestGuides = async (req, res) => {
+    try {
+        // Fetch guides and populate the user details
+        const guides = await Guide.find().populate("userId", "username email");
+
+        // Sort guides by createdAt in descending order
+        const sortedByLatestDate = guides.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+
+        res.status(200).json({
+            message: "Latest guides retrieved successfully",
+            sortedByLatestDate,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -205,6 +227,7 @@ export const topRatedGuide = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export const totGuideLikes = async (req, res) => {
     const { id } = req.params; 
@@ -320,3 +343,100 @@ export const guideandNames = async (req, res) => {
         res.status(500).json({ message: 'Error fetching guides' });
     }
 };
+
+
+
+
+
+export const getGuideInfo = async (req, res) => {
+    try {
+      const guides = await Guide.aggregate([
+        {
+          // Join the 'User' collection to get the username
+          $lookup: {
+            from: 'users', // Make sure the collection name matches 'User' in MongoDB
+            localField: 'userId',
+            foreignField: '_id',
+            as: 'user_info'
+          }
+        },
+        {
+          // Flatten the 'user_info' array
+          $unwind: {
+            path: '$user_info',
+            preserveNullAndEmptyArrays: true // In case there's no user info
+          }
+        },
+        {
+          // Add additional information to count comments and include content
+          $addFields: {
+            comment_count: { $size: '$comments' }, // Count number of comments
+            content: 1 // Include the content field
+          }
+        },
+        {
+          // Group by the guide title and get the first matching username
+          $group: {
+            _id: '$title', // Group by title
+            username: { $first: '$user_info.username' }, // Get the first matching username
+            title_count: { $sum: 1 }, // Count the number of titles per guide
+            comment_count: { $first: '$comment_count' }, // Get the comment count
+            content: { $first: '$content' } // Get the content
+          }
+        },
+        {
+          // Project the result to return the fields as you want them
+          $project: {
+            _id: 0, // Remove _id
+            title: '$_id',
+            username: 1,
+            title_count: 1,
+            comment_count: 1, // Include comment count
+            content: 1 // Include content
+          }
+        }
+      ]);
+  
+      if (guides.length === 0) {
+        return res.status(404).json({ message: "No guide information found" });
+      }
+  
+      // Return the result as a response
+      res.status(200).json(guides);
+    } catch (error) {
+      console.error('Error getting guide info:', error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  export const getGuidesWithDetails = async () => {
+    try {
+      const guides = await Guide.find()
+        .populate({
+          path: "likes", // Populate likes
+          populate: {
+            path: "user_id", // Nested populate user in likes
+            select: "username email", // Adjust fields as necessary
+          },
+        })
+        .populate({
+          path: "comments", // Populate comments
+          populate: {
+            path: "user_id", // Populate user for comments
+            select: "username email",
+          },
+        })
+        .populate({
+          path: "comments", // Populate comments again for nested replies
+          populate: {
+            path: "replies.user_id", // Nested populate user in replies
+            select: "username email",
+          },
+        });
+      return guides;
+    } catch (error) {
+      console.error("Error fetching guides with details:", error.message);
+      throw error;
+    }
+  };
+  

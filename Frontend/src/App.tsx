@@ -7,9 +7,11 @@ import Register from './Components/Register'
 import ManageUser from './Components/ManageUser'
 import ManageGuides from './Components/ManageGuides'
 import PlatformStats from './Components/PlatformStats'
+import Dash from './Components/Dash'
 import Analytics from './Components/Analytics'
 import AddEditGuide from './Components/AddEditGuide'
-import Footer from './Components/Footer'
+import Profile from './Components/Profile'
+
 
 
 const App = () => {
@@ -32,20 +34,20 @@ const App = () => {
   // ];
   
 
-  // const router = createBrowserRouter(
-  //   createRoutesFromElements(
-  //     <>
-  //       <Route path="/" element={<Login />} />
-  //       <Route path="/Dashboard" element={<Dashboard />}>
-  //         <Route index element={<h3>Dashboard Home</h3>} /> 
-  //         <Route path="ManageUser" element={<ManageUser />} />
-  //         <Route path="ManageGuides" element={<ManageGuides />} />
-  //         <Route path="PlatformStats" element={<PlatformStats />} />
-  //       </Route>
-  //       <Route path="/register" element={<Register />} />
-  //     </>
-  //   )
-  // );
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <>
+        <Route path="/" element={<Login />} />
+        <Route path="/Dashboard" element={<Dashboard />}>
+          <Route index element={<h3>Dashboard Home</h3>} /> 
+          <Route path="ManageUser" element={<ManageUser />} />
+          <Route path="ManageGuides" element={<ManageGuides />} />
+          <Route path="PlatformStats" element={<PlatformStats />} />
+        </Route>
+        <Route path="/register" element={<Register />} />
+      </>
+    )
+  );
 
 
   return (

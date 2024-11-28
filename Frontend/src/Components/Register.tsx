@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from 'axios';
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 
@@ -8,57 +9,60 @@ const Register = () => {
     const [role, setRole] = useState(""); 
     const [status, setStatus] = useState("Active");  
     const [password, setPassword] = useState("");
-    const [ConfirmPassword, setConfirmPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-       
-        if (!email || !username || !role || !password || !ConfirmPassword) {
+        
+        if (!email || !username || !role || !password || !confirmPassword) {
             setError("Please enter all fields");
             return;
         }
     
-        if (password !== ConfirmPassword) {
+        if (password !== confirmPassword) {
             setError("Passwords do not match");
             return;
         }
+ 
+        console.log("Form submitted with values:", { email, username, role, status, password });
     
         try {
-            const response = await fetch("http://localhost:3001/api/v1/user/add", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    username,
-                    role,
-                    status,
-                    password,
-                }),
+            console.log("Attempting to send request...");
+            const response = await axios.post("http://localhost:3001/api/v1/user/add", {
+                email,
+                username,
+                role,
+                status,
+                password,
             });
     
-            const data = await response.json();
+            console.log("Request sent, awaiting response...");
+            const data = response.data;
+            console.log("Server response:", data);
     
-            if (response.ok) {
+            if (response.status === 200) {
                 setSuccess("User registered successfully!");
                 setError(""); 
-                setEmail("");
-                setUsername("");
-                setRole("");
-                setPassword("");
-                setConfirmPassword("");
+                setTimeout(() => {
+                    setEmail("");
+                    setUsername("");
+                    setRole("");
+                    setPassword("");
+                    setConfirmPassword("");
+                }, 2000); // Reset form after 2 seconds
             } else {
                 setError(data.message || "Error occurred during registration.");
             }
         } catch (err) {
+            console.error("Error occurred while creating user:", err);
             setError("Error occurred while creating user");
         }
     };
     
-
+    
+    
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full sm:w-96">
@@ -119,7 +123,7 @@ const Register = () => {
                         <input
                             type="password"
                             placeholder="Confirm Password"
-                            value={ConfirmPassword}
+                            value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             required
@@ -134,7 +138,6 @@ const Register = () => {
                     </button>
                 </form>
                 <div className="flex gap-2 py-4 justify-center">
-                    {/* <p>Don't have an account?</p> */}
                     <Link to={"/login"}><p className="text-green-600"> Sign in here</p></Link>
                 </div>
             </div>
