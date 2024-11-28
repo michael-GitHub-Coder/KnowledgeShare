@@ -83,7 +83,7 @@ const ManageUser = () => {
 
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full table-auto border-collapse border border-gray-200">
+      <table className="min-w-full table-auto border-collapse border border-gray-100">
         <thead>
           <tr>
             <th className="border border-gray-300 p-2">User Email</th>

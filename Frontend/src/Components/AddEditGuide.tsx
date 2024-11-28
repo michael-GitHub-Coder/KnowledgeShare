@@ -51,7 +51,6 @@ const AddEditGuide = () => {
 
         },
         body: JSON.stringify({ ...guideData,userId}),
-        
       });
       
       console.log(guideData)
