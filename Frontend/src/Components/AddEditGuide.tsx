@@ -100,6 +100,9 @@ const AddEditGuide = () => {
 
   return (
     <div>
+        <div className="pb-4 flex justify-end">
+          <button className="px-4 py-2 bg-slate-700 text-white rounded-md hover:bg-slate-600">Add Guide</button>
+        </div>
       {/* Display the guides in a table */}
       <table className="table-auto w-full border-collapse">
         <thead>
