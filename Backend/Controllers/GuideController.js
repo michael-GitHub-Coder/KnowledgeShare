@@ -344,9 +344,19 @@ export const guideandNames = async (req, res) => {
     }
 };
 
-
-
-
+export const getGuideById = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const guide = await Guide.findById(id);
+        if (guide) {
+            return res.status(200).json({ message: `Guide for ${id}`, Guide: guide });
+        } else {
+            return res.status(404).json({ message: `Guide with ID ${id} not found` });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 export const getGuideInfo = async (req, res) => {
     try {

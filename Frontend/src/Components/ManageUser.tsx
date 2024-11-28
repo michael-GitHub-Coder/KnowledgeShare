@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ManageUser = () => {
   const [AllUsers, setAllusers] = useState<any[]>([]);
@@ -108,7 +110,7 @@ const ManageUser = () => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full table-auto border-collapse border border-gray-100">
-        <thead>
+        <thead  className="bg-gray-700 text-white">
           <tr>
             <th className="border border-gray-300 p-2">User Email</th>
             <th className="border border-gray-300 p-2">Name</th>

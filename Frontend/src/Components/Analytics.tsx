@@ -21,13 +21,6 @@ import {
       { name: 'Guide 1', views: 400, likes: 200, comments: 50 },
       { name: 'Guide 2', views: 700, likes: 400, comments: 100 },
       { name: 'Guide 3', views: 300, likes: 100, comments: 20 },
-      { name: 'Guide 4', views: 300, likes: 100, comments: 20 },
-      { name: 'Guide 5', views: 300, likes: 100, comments: 20 },
-      { name: 'Guide 1', views: 400, likes: 200, comments: 50 },
-      { name: 'Guide 2', views: 700, likes: 400, comments: 100 },
-      { name: 'Guide 3', views: 300, likes: 100, comments: 20 },
-      { name: 'Guide 4', views: 300, likes: 100, comments: 20 },
-      { name: 'Guide ', views: 300, likes: 100, comments: 20 },
     ];
 
     const [guides, setGuides] = useState([]);

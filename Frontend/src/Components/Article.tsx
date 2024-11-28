@@ -1,38 +1,55 @@
-import React from 'react';
-import { MdOutlinePerson2 } from 'react-icons/md';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+interface Post {
+  likes: string[];
+  _id: string;
+  userId: string;
+  title: string;
+  category: string;
+  content: string;
+  media: string;
+  comments: string[];
+  createdAt: string;
+  updatedAt: string;
+}
 
 const Article = () => {
+  const [post, setPost] = useState<Post | null>(null);
+  const {_id} = useParams();
+  
+  useEffect(() => {
+
+    const fetchPostData = async () => {
+      const response = await fetch(`http://localhost:3001/api/v1/guide/getGuidebyId/${_id}`);
+      const res = await response.json();
+      setPost(res.Guide);
+     
+    };
+    
+    fetchPostData();
+  }, []);
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="container mx-auto">
-      <div className="max-w-7xl h-[300px] flex justify-center">
-          <img
-            src="https://th.bing.com/th/id/OIP.swgo4DOL6L0rPIauDaokuAHaHa?rs=1&pid=ImgDetMain"
-            className="w-full h-full rounded-md"
-            alt="Example"
-          />
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-3xl font-semibold text-gray-900">{post.title}</h1>
+      <p className="text-lg text-gray-600 mt-2">{post.category}</p>
+      
+   
+      <div className="mt-4">
+        <img src={post.media} alt={post.title} className="w-full h-auto rounded-lg shadow-md" />
       </div>
-      <div className="font-semibold">
-        <p className="font-semibold text-xl">rwgwfdhjfhk</p>
+
+      <p className="mt-4 text-base text-gray-800 leading-relaxed">{post.content}</p>
+      <div className="mt-6 text-sm text-gray-600">
+        <p>Likes: {post.likes}</p>
+        <p>Comments: {post.comments}</p>
+        <p>Posted on: {}</p>
       </div>
-      <div>
-        <MdOutlinePerson2 />
-      </div>
-     {/* <div className="">
-        <div className="relative">
-            <div className="max-w-7xl h-[300px] flex justify-center">
-            <img
-                src="https://th.bing.com/th/id/OIP.swgo4DOL6L0rPIauDaokuAHaHa?rs=1&pid=ImgDetMain"
-                className="w-full h-full rounded-md"
-                alt="Example"
-            />
-            </div>
-            <div className="absolute max-w-6xl bg-white h-[268px] left-[50px] -right-[30px] top-[80%] z-10 shadow-sm p-5 text-gray-500 rounded-md">
-            <div className="flex justify-center w-full rounded-md">
-                <p>gr</p>
-            </div>
-            </div>
-        </div>
-     </div> */}
     </div>
   );
 };

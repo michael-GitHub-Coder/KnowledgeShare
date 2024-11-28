@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { RiDeleteBinLine } from "react-icons/ri";
 const AddEditGuide = () => {
   const userId = localStorage.getItem("userId"); 
   const [guides, setGuides] = useState([]);
@@ -171,8 +171,8 @@ const AddEditGuide = () => {
         </button>
       </div>
       {/* Display the guides in a table */}
-      <table className="table-auto w-full border-collapse">
-        <thead>
+      <table className="table-auto w-full border-collapse ">
+        <thead className="bg-gray-700 text-white">
           <tr>
             <th className="border px-4 py-2">Title</th>
             <th className="border px-4 py-2">Author</th>
@@ -197,7 +197,7 @@ const AddEditGuide = () => {
                   onClick={() => handleDelete(guide._id)}
                   className="bg-red-500 text-white py-1 px-3 rounded ml-2"
                 >
-                  Delete
+                  < RiDeleteBinLine/>
                 </button>
               </td>
             </tr>
