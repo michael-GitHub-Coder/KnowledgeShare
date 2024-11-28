@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import {
     LineChart,
     Line,
@@ -16,6 +17,17 @@ import {
       { name: 'Guide 2', views: 700, likes: 400, comments: 100 },
       { name: 'Guide 3', views: 300, likes: 100, comments: 20 },
     ];
+
+    const [guides, setGuides] = useState([]);
+
+    useEffect(() => {
+      const fetchGuides = async () => {
+        const response = await fetch("http://localhost:3001/api/v1/guide/latestGuides");
+        const data = await response.json();
+        setGuides(data.sortedByLatestDate);
+      };
+      fetchGuides();
+    }, []);
   
     return (
       <div className="p-5  bg-gray-100 ">

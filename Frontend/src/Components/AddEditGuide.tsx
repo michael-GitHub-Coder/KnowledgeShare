@@ -11,7 +11,11 @@ const AddEditGuide = () => {
     content: "",
     media: "",
   });
+  const [toggle, setToggle] = useState(false);
 
+  const handleClick = () => {
+    setToggle(!toggle); // Change state to trigger a re-render
+  };
   // Fetch guides for the logged-in user
   useEffect(() => {
     const fetchGuides = async () => {
@@ -154,7 +158,7 @@ const AddEditGuide = () => {
     <div>
       <div className="pb-4 flex justify-end gap-2">
         <button
-          onClick={() => setShowAddForm(true)}
+          onClick={() => handleClick}
           className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-slate-600"
         >
           Refresh
@@ -312,7 +316,3 @@ const AddEditGuide = () => {
 };
 
 export default AddEditGuide;
-
-
-
-AddEditGuide
