@@ -1,4 +1,5 @@
 import React from 'react';
+import { MdOutlinePerson2 } from 'react-icons/md';
 
 const Article = () => {
   return (
@@ -11,7 +12,10 @@ const Article = () => {
           />
       </div>
       <div className="font-semibold">
-        <p>rwgwfdhjfhk</p>
+        <p className="font-semibold text-xl">rwgwfdhjfhk</p>
+      </div>
+      <div>
+        <MdOutlinePerson2 />
       </div>
      {/* <div className="">
         <div className="relative">
