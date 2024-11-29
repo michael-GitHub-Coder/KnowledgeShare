@@ -116,7 +116,7 @@ const ArticleInDash = () => {
           </div>
           <h1 className="text-3xl font-semibold text-gray-900">{post.title}</h1>
           <p className="text-lg text-gray-600 mt-2">{post.category}</p>
-          <p className="mt-4 text-base text-gray-800 leading-relaxed">{post.content}</p>
+          <p className="mt-4 text-base text-gray-800 leading-relaxed">{post.content.split("\n")}</p>
           
         </div>
 

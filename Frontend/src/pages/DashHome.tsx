@@ -24,11 +24,11 @@ const DashHome = () => {
   return (
     <div>
         <p className="px-5">Lates guides</p>
-        <div className="grid grid-cols-4 -mt-20">
+        <div className="grid grid-cols-3 -mt-20">
         {guides.map(data=>( 
             
             <Card _id={data._id} image={data.media} title={data.title} content={data.content} Author={data.userId.username} day={data.createdAt.substring(8,10)} month={months[parseInt(data.createdAt.substring(5, 7), 10) - 1]}/>
-            )).slice(0,4) 
+            )).slice(0,3) 
         }
         </div> 
     </div>
