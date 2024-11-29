@@ -48,7 +48,7 @@ const Dashboard = () => {
     <div className="flex">
       <div className="w-64 h-screen bg-gray-800 text-white">
         <div className="py-4 px-8 text-xl">
-          <NavLink to="/Dashboard/Dash" className="cursor-pointer" activeClassName="bg-gray-600">
+          <NavLink to="/Dashboard/ArticleInDash" className="cursor-pointer" activeClassName="bg-gray-600">
             Dashboard
           </NavLink>
         </div>
