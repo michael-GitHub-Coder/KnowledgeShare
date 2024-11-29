@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { BsReplyAll } from 'react-icons/bs';
 import { FaComments, FaLocationArrow, FaRegComment } from 'react-icons/fa6';
+import { IoMdArrowBack } from 'react-icons/io';
 import { MdOutlinePerson2 } from 'react-icons/md';
 import { SlLike } from 'react-icons/sl';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface Post {
   likes: string[];
@@ -28,7 +29,7 @@ const ArticleInDash = () => {
   const [guides, setGuides] = useState<any[]>([]);
   const { _id } = useParams();
   const userId = localStorage.getItem("userId");
-
+ const navigate = useNavigate();
   const fetchGuides = async () => {
     const response = await fetch(`http://localhost:3001/api/v1/guide/UsersWithComments/${_id}`);
     const res = await response.json();
@@ -84,9 +85,14 @@ const ArticleInDash = () => {
   const handleReply = () =>{
         setReplyisopen(!ReplyisOpen);
   }
+
+  const handleBack = ()=>{
+    navigate("/Dashboard/ArticleInDash");
+  }
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+    <div className="relative flex justify-center items-center min-h-screen ">
       <div className="flex flex-col lg:flex-row gap-10 container mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <button onClick={()=>handleBack()} className="absolute left-5 top-5"><IoMdArrowBack size={40} /></button>
         <div className="max-w-4xl mx-auto">
             <div>
                 <img src={post.media} alt={post.title} className="w-full h-auto rounded-lg shadow-md" />

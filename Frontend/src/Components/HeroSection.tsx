@@ -130,9 +130,10 @@ const HeroSection = () => {
 
       <div className="container mx-auto px-4 py-10">
         {/* <h2 className="text-lg md:text-xl font-bold mb-6">Latest Guides</h2> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {guides.slice(0, 4).map((data) => (
-            <Card
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 -mt-10">
+          {guides.slice(0, 12).map((data) => (
+           <div className="mb-40">
+             <Card
               key={data._id}
               _id={data._id}
               image={data.media}
@@ -142,6 +143,7 @@ const HeroSection = () => {
               day={data.createdAt.substring(8, 10)}
               month={months[parseInt(data.createdAt.substring(5, 7), 10) - 1]}
             />
+           </div>
           ))}
         </div>
       </div>

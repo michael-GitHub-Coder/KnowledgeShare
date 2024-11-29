@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { CiSettings } from 'react-icons/ci';
 import { FaPerson } from 'react-icons/fa6';
-import { MdOutlinePerson2 } from 'react-icons/md';
+import { IoStatsChartOutline } from 'react-icons/io5';
+import { MdOutlineManageAccounts, MdOutlinePerson2 } from 'react-icons/md';
+import { RxDashboard } from 'react-icons/rx';
+import { SiAwssecretsmanager } from 'react-icons/si';
+import { TbBrandGoogleAnalytics } from 'react-icons/tb';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
@@ -48,9 +53,10 @@ const Dashboard = () => {
     <div className="flex">
 
       <div className="w-64 h-screen bg-gray-800 text-white">
-        <div className="py-4 px-8 text-xl">
-          <NavLink to="/Dashboard/ArticleInDash" className="cursor-pointer" activeClassName="bg-gray-600">
-            Dashboard
+        <div className="font-bold py-8 px-8 text-xl bg-gray-950 rounded-md flex gap-2">
+          <RxDashboard className="mt-1"/>
+          <NavLink to="/Dashboard/ArticleInDash" className="cursor-pointer" activeClassName="bg-gray-600 ">
+            Dashboard 
           </NavLink>
         </div>
         <nav>
@@ -58,13 +64,13 @@ const Dashboard = () => {
           {userRole === "Expert" && (
             <ul>
               <NavLink to="/Dashboard/AddEditGuides" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Manage Guides</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><SiAwssecretsmanager className="mt-1"/> Manage Guides</li>
               </NavLink>
               <NavLink to="/Dashboard/Analytics" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Analytics</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><TbBrandGoogleAnalytics className="mt-1" /> Analytics</li>
               </NavLink>
               <NavLink to="/Dashboard/profile" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Profile Settings</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><CiSettings className="mt-1" />Profile</li>
               </NavLink>
             </ul>
           )}
@@ -73,13 +79,13 @@ const Dashboard = () => {
           {userRole === "Admin" && (
             <ul>
               <NavLink to="/Dashboard/ManageUser" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Manage Users</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><MdOutlineManageAccounts className="mt-1" /> Manage Users</li>
               </NavLink>
               <NavLink to="/Dashboard/ManageGuides" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Manage Guides</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><SiAwssecretsmanager className="mt-1" /> Manage Guides</li>
               </NavLink>
               <NavLink to="/Dashboard/PlatformStats" className="cursor-pointer" activeClassName="bg-gray-600">
-                <li className="py-4 px-8">Platform Stats</li>
+                <li className="py-4 px-8 flex gap-2 hover:bg-gray-950 hover:rounded-md"><IoStatsChartOutline className="mt-1" /> Platform Stats</li>
               </NavLink>
             </ul>
           )}
@@ -97,9 +103,9 @@ const Dashboard = () => {
 
             {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute right-0 top-5 mt-2 w-48 bg-white text-black rounded shadow-lg">
+              <div className="absolute right-0 top-5 mt-2 w-48 bg-gray-800 text-white rounded shadow-lg">
                 <ul>
-                  <li onClick={handleLogout} className="py-2 px-4 hover:bg-gray-200 cursor-pointer">
+                  <li onClick={handleLogout} className="py-2 px-4 hover:bg-gray-950 hover:rounded-md cursor-pointer">
                     Log Out
                   </li>
                 </ul>
