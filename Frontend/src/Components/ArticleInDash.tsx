@@ -89,14 +89,18 @@ const ArticleInDash = () => {
                 <button onClick={()=>handleIsopen()}>
                     <FaRegComment size={20} className="mt-1 cursor-pointer"/>
                 </button>
-                
+                </div>
                 {isOpen && (
-                    <form >                  
-                        <input type="text" placeholder="Comment.."  className="bg-gray-100 focus:border-0 focus:ring-0 px-2 py-2 rounded-l-md"  />
-                        <button className=" py-2 bg-gray-700 text-white px-4 rounded-r-md">Send</button>
-                   </form>
+                   <div className="max-w-4xl">
+                        <form >                  
+                            <div className="flex relative">
+                                <textarea placeholder="Comment.."  className="bg-gray-100 h-[100px] focus:border-0 focus:ring-0 px-2 py-2 rounded-md w-full"  />
+                                <button className="absolute bottom-0 right-0 py-2 bg-gray-700 text-white px-4 rounded-md">Send</button>
+                            </div>
+                        </form>
+                   </div>
                 )}
-            </div>
+            
           </div>
           <h1 className="text-3xl font-semibold text-gray-900">{post.title}</h1>
           <p className="text-lg text-gray-600 mt-2">{post.category}</p>
