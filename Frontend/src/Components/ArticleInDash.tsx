@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
+import { BsReplyAll } from 'react-icons/bs';
 import { FaComments, FaLocationArrow, FaRegComment } from 'react-icons/fa6';
 import { MdOutlinePerson2 } from 'react-icons/md';
 import { SlLike } from 'react-icons/sl';
@@ -22,6 +23,7 @@ const ArticleInDash = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [likeIcon,setlikeIcon] = useState<boolean>(false);
   const [isOpen, setisopen] = useState<boolean>(false);
+  const [ReplyisOpen, setReplyisopen] = useState<boolean>(false);
   const [GuidelikeIcon,guidesetlikeIcon] = useState<boolean>(false);
   const [guides, setGuides] = useState<any[]>([]);
   const { _id } = useParams();
@@ -78,6 +80,10 @@ const ArticleInDash = () => {
   const handleIsopen = ()=>{
         setisopen(!isOpen);
   }
+
+  const handleReply = () =>{
+        setReplyisopen(!ReplyisOpen);
+  }
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="flex flex-col lg:flex-row gap-10 container mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -119,8 +125,13 @@ const ArticleInDash = () => {
                   <p className="text-base text-gray-700 bg-gray-100 px-1 py-2 rounded-md">{data.comment_text}</p>
                   <div className="flex pb-4 gap-4">
                     {likeIcon ? <button onClick={()=> {handleLikes();handleLikeNumber()}}><AiFillLike size={20} className="mt-1 cursor-pointer"/></button>  : <button onClick={()=> handleLikes()}><AiOutlineLike size={20} className="mt-1 cursor-pointer"/></button> }
-                    <FaRegComment size={20} className="mt-1 cursor-pointer"/>
+                    <button onClick={()=> handleReply()}>
+                        <BsReplyAll size={20} className="mt-1 cursor-pointer"/>
+                    </button>
                     <p className="text-sm text-gray-500 mt-1">Posted on: {new Date(data.createdAt).toLocaleDateString()}</p>
+                  </div>
+                  <div>
+                    {ReplyisOpen && <textarea />}
                   </div>
                </div>
               </li>
