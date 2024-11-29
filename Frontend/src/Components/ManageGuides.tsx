@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const ManageGuides = () => {
   const [guides, setGuides] = useState([]);
@@ -134,12 +135,14 @@ const ManageGuides = () => {
               <td className="border px-4 py-2">{guide.userId?.username}</td>
               <td className="border px-4 py-2">{guide.category}</td>
               <td className="border px-4 py-2 flex justify-center">
+                <Link to={`/Dashboard/ArtINDashReal/${guide._id}`}>
                 <button
-                  onClick={() => handleEdit(guide)}
+                  // onClick={() => handleEdit(guide)}
                   className="bg-gray-700 text-white py-1 px-3 rounded"
                 >
-                  Edit
+                  View
                 </button>
+                </Link>
                 <button
                   onClick={() => handleDelete(guide.userId._id)}
                   className="bg-red-500 text-white py-1 px-3 rounded ml-2"

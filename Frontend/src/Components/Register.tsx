@@ -27,20 +27,33 @@ const Register = () => {
         }
  
         console.log("Form submitted with values:", { email, username, role, status, password });
-    
-        try {
-            console.log("Attempting to send request...");
-            const response = await axios.post("http://localhost:3001/api/v1/user/add", {
+        const userData = {
                 email,
                 username,
                 role,
                 status,
                 password,
-            });
-    
+            }
+            console.log(userData);
+        try {
+            console.log("Attempting to send request...");
+            // const response = await axios.post("http://localhost:3001/api/v1/user/add", {
+            //     email,
+            //     username,
+            //     role,
+            //     status,
+            //     password,
+            // });
+            const response = await fetch("http://localhost:3001/api/v1/user/add", {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userData),
+              });
             console.log("Request sent, awaiting response...");
-            const data = response.data;
-            console.log("Server response:", data);
+            // const data = response.data;
+            // console.log("Server response:", data);
     
             if (response.status === 200) {
                 setSuccess("User registered successfully!");

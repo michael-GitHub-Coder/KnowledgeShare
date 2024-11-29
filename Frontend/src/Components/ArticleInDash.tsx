@@ -92,7 +92,7 @@ const ArticleInDash = () => {
   return (
     <div className="relative flex justify-center items-center min-h-screen ">
       <div className="flex flex-col lg:flex-row gap-10 container mx-auto p-6 bg-white rounded-lg shadow-lg">
-      <button onClick={()=>handleBack()} className="absolute left-5 top-5"><IoMdArrowBack size={40} /></button>
+      {/* <button onClick={()=>handleBack()} className="absolute left-5 top-5"><IoMdArrowBack size={40} /></button> */}
         <div className="max-w-4xl mx-auto">
             <div>
                 <img src={post.media} alt={post.title} className="w-full h-auto rounded-lg shadow-md" />
