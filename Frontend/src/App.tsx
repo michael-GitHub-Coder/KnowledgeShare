@@ -13,6 +13,7 @@ import Dash from './Components/Dash'
 import Analytics from './Components/Analytics'
 import AddEditGuide from './Components/AddEditGuide'
 import Profile from './Components/Profile'
+import ArticleInDash from './Components/ArticleInDash'
 
 
 
@@ -30,7 +31,7 @@ const App = () => {
           <Route path="Analytics" element={<Analytics />}/>
           <Route path="AddEditGuides" element={<AddEditGuide />}/>
           <Route path="profile" element={<Profile />} />
-         
+          <Route path="ArticleInDash/:_id" element={<ArticleInDash />}/>
         </Route>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />} />

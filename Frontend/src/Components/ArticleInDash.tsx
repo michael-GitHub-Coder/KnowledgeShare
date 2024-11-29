@@ -18,7 +18,7 @@ interface Post {
   updatedAt: string;
 }
 
-const Article = () => {
+const ArticleInDash = () => {
   const [post, setPost] = useState<Post | null>(null);
   const [likeIcon,setlikeIcon] = useState<boolean>(false);
   const [GuidelikeIcon,guidesetlikeIcon] = useState<boolean>(false);
@@ -93,4 +93,4 @@ const Article = () => {
   );
 };
 
-export default Article;
+export default ArticleInDash;
