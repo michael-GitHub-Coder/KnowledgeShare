@@ -122,17 +122,18 @@ export const commentGuide = async (req, res) => {
 
 export const likeGuide = async (req, res) => {
     const { id } = req.params;
+    const {userId} = req.body;
 
     try {
    
-        const existingLike = await likeModel.findOne({ user_id: req.user._id, guide_id: id });
+        const existingLike = await likeModel.findOne({ user_id: userId, guide_id: id });
 
         if (existingLike) {
             return res.status(400).json({ message: "Guide already liked" });
         }
 
         const newLike = await likeModel.create({
-            user_id: req.user._id,
+            user_id: userId,
             guide_id: id,
         });
 

@@ -9,7 +9,7 @@ router.get("/all",getAllguides);
 router.put("/update/:id",updateGuide);
 router.delete("/delete/:id", deleteGuide);
 router.post("/like/:id",likeGuide);
-router.post("/unlike/:id",unlikeGuide);
+router.post("/unlike/:id",protect,unlikeGuide);
 router.post("/comment/:id",protect,commentGuide);
 router.get("/latestGuides",latestGuides);
 router.get("/topRated",topRatedGuide);
