@@ -69,7 +69,7 @@ const Article = () => {
           
         </div>
 
-        <div className="w-[350px] p-4 rounded-lg">
+        <div className="w-[350px] p-4 rounded-lg h-screen overflow-auto">
           <h2 className="text-2xl font-semibold text-gray-800">Comments</h2>
           <ul>
             {guides.map((data) => (

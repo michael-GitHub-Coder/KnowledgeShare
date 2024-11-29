@@ -12,6 +12,7 @@ import Card from './Card'
 //   month:Date;
 //   totCom:string;
 // }
+
 const Dash = () => {
 
   const [guides, setGuides] = useState<[]>([]);
