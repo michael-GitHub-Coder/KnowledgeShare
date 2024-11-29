@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 const HeroSection = () => {
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [guides, setGuides] = useState([]);
+ 
 
   useEffect(() => {
     const fetchGuides = async () => {
