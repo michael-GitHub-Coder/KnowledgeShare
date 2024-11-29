@@ -18,6 +18,7 @@ type CardProps = {
   
 const Card = ({image,title,content,Author,day,month,_id}: CardProps) => {
 
+  const userId = localStorage.getItem("userId");
   const words = content.split(' '); 
   const first13Words = words.slice(0, 13).join(' '); 
 
@@ -41,7 +42,11 @@ const Card = ({image,title,content,Author,day,month,_id}: CardProps) => {
             </div>
             <h1 className="py-4 font-bold text-black">{title_words_title}...</h1>
             <p className="pb-4">{first13Words}...</p>
-            <p className="absolute bottom-2 pb-4 flex gap-2 font-bold text-black"><Link to={`/Article/${_id}`}>Read More </Link><FaGreaterThan size={10} className="mt-2"/></p>
+            <p className="absolute bottom-2 pb-4 flex gap-2 font-bold text-black">
+            <Link to={userId ? `/Dashboard/ArticleInDash/ArtINDashReal/${_id}` : `/Article/${_id}`}>
+              Read More
+            </Link>
+            <FaGreaterThan size={10} className="mt-2"/></p>
         </div>
       </div>
     </div>
