@@ -131,7 +131,14 @@ const ArticleInDash = () => {
                     <p className="text-sm text-gray-500 mt-1">Posted on: {new Date(data.createdAt).toLocaleDateString()}</p>
                   </div>
                   <div>
-                    {ReplyisOpen && <textarea />}
+                    {ReplyisOpen && (
+                       <form>
+                            <div className="flex relative">
+                                <textarea className="w-full px-2 py-1" placeholder="Reply" />
+                                <button className="absolute bottom-0 right-0 py-2 bg-gray-700 text-white px-4 rounded-md">Send</button>
+                            </div>
+                       </form>
+                    )}
                   </div>
                </div>
               </li>
