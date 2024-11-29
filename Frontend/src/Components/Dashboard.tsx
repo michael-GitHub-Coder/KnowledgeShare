@@ -46,6 +46,7 @@ const Dashboard = () => {
   return (
 
     <div className="flex">
+
       <div className="w-64 h-screen bg-gray-800 text-white">
         <div className="py-4 px-8 text-xl">
           <NavLink to="/Dashboard/ArticleInDash" className="cursor-pointer" activeClassName="bg-gray-600">
@@ -85,7 +86,7 @@ const Dashboard = () => {
         </nav>
       </div>
 
-      <div className="flex-1 p-6 bg-gray-300">
+      <div className="flex-1 p-6 bg-gray-300 h-screen overflow-auto">
         <div className="flex justify-between px-5">
           <h1 className="text-2xl mb-10 font-semibold">Welcome to {userRole} Dashboard</h1>
           <div className="flex gap-2 relative">
@@ -107,7 +108,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="px-5">
+        <div className="px-5 ">
           <Outlet />
         </div>
       </div>
