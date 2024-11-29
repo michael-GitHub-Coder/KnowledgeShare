@@ -10,7 +10,7 @@ router.put("/update/:id",updateGuide);
 router.delete("/delete/:id", deleteGuide);
 router.post("/like/:id",likeGuide);
 router.post("/unlike/:id",unlikeGuide);
-router.post("/comment/:id",commentGuide);
+router.post("/comment/:id",protect,commentGuide);
 router.get("/latestGuides",latestGuides);
 router.get("/topRated",topRatedGuide);
 router.get("/totLikes/:id",totGuideLikes);

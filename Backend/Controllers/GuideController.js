@@ -292,7 +292,7 @@ export const getGuideDetailsWithAllUsers = async (req, res) => {
     try {
        
         const guide = await Guide.findById(id)
-            .populate("userId", "name email") 
+            .populate("userId", "username email") 
             .exec();
 
         if (!guide) {
@@ -301,12 +301,12 @@ export const getGuideDetailsWithAllUsers = async (req, res) => {
 
  
         const comments = await Comment.find({ guide_id: id })
-            .populate("user_id", "name email") 
-            .populate("replies.user_id", "name email") 
+            .populate("user_id", "username email") 
+            .populate("replies.user_id", "username email") 
             .exec();
 
         const likes = await likeModel.find({ guide_id: id })
-            .populate("user_id", "name email")
+            .populate("user_id", "username email")
             .exec();
 
    

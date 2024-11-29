@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Card from './Card'
 
+
+// interface guides{
+//   _id:string;
+//   image:string;
+//   title:string;
+//   content:string;
+//   Author:string;
+//   day:Date;
+//   month:Date;
+//   totCom:string;
+// }
 const Dash = () => {
 
-  const [guides, setGuides] = useState([]);
+  const [guides, setGuides] = useState<[]>([]);
 
   useEffect(() => {
     const fetchGuides = async () => {

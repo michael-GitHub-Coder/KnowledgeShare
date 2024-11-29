@@ -22,12 +22,15 @@ const HeroSection = () => {
     fetchGuides();
   }, []);
 
-  const toggleCategoryDropdown = () => setShowCategoryDropdown(!showCategoryDropdown);
+  
 
+  console.log(guides)
   const months = [
     "Jan", "Feb", "Mar", "Apr", "May", "June",
     "July", "Aug", "Sep", "Oct", "Nov", "Dec",
   ];
+
+  const toggleCategoryDropdown = () => setShowCategoryDropdown(!showCategoryDropdown);
 
   return (
     <div>
@@ -129,7 +132,8 @@ const HeroSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {guides.slice(0, 4).map((data) => (
             <Card
-              key={data.id}
+              key={data._id}
+              _id={data._id}
               image={data.media}
               title={data.title}
               content={data.content}
