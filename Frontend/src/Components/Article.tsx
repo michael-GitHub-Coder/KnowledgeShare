@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { FaComments, FaRegComment } from 'react-icons/fa6';
 import { MdOutlinePerson2 } from 'react-icons/md';
 import { SlLike } from 'react-icons/sl';
@@ -19,6 +20,7 @@ interface Post {
 
 const Article = () => {
   const [post, setPost] = useState<Post | null>(null);
+  const [likeIcon,setlikeIcon] = useState<boolean>(false);
   const [guides, setGuides] = useState<any[]>([]);
   const { _id } = useParams();
 
@@ -43,6 +45,9 @@ const Article = () => {
     return <div>Loading...</div>;
   }
 
+  const handleLikes = ()=>{
+    setlikeIcon(!likeIcon);
+  }
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="flex flex-col lg:flex-row gap-10 container mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -69,10 +74,10 @@ const Article = () => {
                <div className="mt-1">
                   <h3 className="text-sm font-bold text-gray-900 flex"><MdOutlinePerson2 className="mt-1 text-black"/> {data.user_id.username}</h3>
                   <p className="text-base text-gray-700 bg-gray-100 px-1 py-2 rounded-md">{data.comment_text}</p>
-                  <div className="flex py-4 gap-4">
-                    <SlLike size={10} className="mt-1"/>
-                    <FaRegComment size={10} className="mt-1"/>
-                    <p className="text-sm text-gray-500">Posted on: {new Date(data.createdAt).toLocaleDateString()}</p>
+                  <div className="flex pb-4 gap-4">
+                    {likeIcon ? <button onClick={()=> handleLikes()}><AiFillLike size={20} className="mt-1 cursor-pointer"/></button>  : <button onClick={()=> handleLikes()}><AiOutlineLike size={20} className="mt-1 cursor-pointer"/></button> }
+                    <FaRegComment size={20} className="mt-1 cursor-pointer"/>
+                    <p className="text-sm text-gray-500 mt-1">Posted on: {new Date(data.createdAt).toLocaleDateString()}</p>
                   </div>
                </div>
               </li>
