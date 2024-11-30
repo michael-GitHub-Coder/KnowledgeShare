@@ -328,16 +328,16 @@ export const getGuideDetailsWithAllUsers = async (req, res) => {
     }
 };
 
-// Endpoint to get all guides with the username appended
+
 export const guideandNames = async (req, res) => {
     try {
         const guides = await Guide.find()
             .populate({
-                path: 'userId', // Populate the userId field in the guide schema
-                select: 'username' // Only retrieve the username field
+                path: 'userId',
+                select: 'username' 
             });
 
-        // Send the guides with the populated username
+      
         res.json(guides);
     } catch (error) {
         console.error(error);
