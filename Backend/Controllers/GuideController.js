@@ -363,47 +363,47 @@ export const getGuideInfo = async (req, res) => {
     try {
       const guides = await Guide.aggregate([
         {
-          // Join the 'User' collection to get the username
+         
           $lookup: {
-            from: 'users', // Make sure the collection name matches 'User' in MongoDB
+            from: 'users', 
             localField: 'userId',
             foreignField: '_id',
             as: 'user_info'
           }
         },
         {
-          // Flatten the 'user_info' array
+       
           $unwind: {
             path: '$user_info',
-            preserveNullAndEmptyArrays: true // In case there's no user info
+            preserveNullAndEmptyArrays: true 
           }
         },
         {
-          // Add additional information to count comments and include content
+       
           $addFields: {
-            comment_count: { $size: '$comments' }, // Count number of comments
-            content: 1 // Include the content field
+            comment_count: { $size: '$comments' }, 
+            content: 1 
           }
         },
         {
-          // Group by the guide title and get the first matching username
+         
           $group: {
-            _id: '$title', // Group by title
-            username: { $first: '$user_info.username' }, // Get the first matching username
-            title_count: { $sum: 1 }, // Count the number of titles per guide
-            comment_count: { $first: '$comment_count' }, // Get the comment count
-            content: { $first: '$content' } // Get the content
+            _id: '$title', 
+            username: { $first: '$user_info.username' }, 
+            title_count: { $sum: 1 }, 
+            comment_count: { $first: '$comment_count' }, 
+            content: { $first: '$content' } 
           }
         },
         {
-          // Project the result to return the fields as you want them
+        
           $project: {
-            _id: 0, // Remove _id
+            _id: 0, 
             title: '$_id',
             username: 1,
             title_count: 1,
-            comment_count: 1, // Include comment count
-            content: 1 // Include content
+            comment_count: 1,
+            content: 1 
           }
         }
       ]);
@@ -412,7 +412,7 @@ export const getGuideInfo = async (req, res) => {
         return res.status(404).json({ message: "No guide information found" });
       }
   
-      // Return the result as a response
+     
       res.status(200).json(guides);
     } catch (error) {
       console.error('Error getting guide info:', error);
