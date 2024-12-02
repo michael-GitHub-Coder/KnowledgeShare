@@ -15,7 +15,7 @@ export const createGuide = async (req, res) => {
      
         const guide = await Guide.create({
             userId: UDID || req.user?._id, 
-            // userId:UDID || req.user?._id,
+            // userId: req.user?._id,
             title,
             category,
             content,
