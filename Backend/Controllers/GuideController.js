@@ -396,7 +396,6 @@ export const getGuideInfo = async (req, res) => {
           }
         },
         {
-        
           $project: {
             _id: 0, 
             title: '$_id',
