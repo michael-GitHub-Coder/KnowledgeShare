@@ -423,23 +423,23 @@ export const getGuideInfo = async (req, res) => {
     try {
       const guides = await Guide.find()
         .populate({
-          path: "likes", // Populate likes
+          path: "likes", 
           populate: {
-            path: "user_id", // Nested populate user in likes
-            select: "username email", // Adjust fields as necessary
+            path: "user_id", 
+            select: "username email", 
           },
         })
         .populate({
-          path: "comments", // Populate comments
+          path: "comments", 
           populate: {
-            path: "user_id", // Populate user for comments
+            path: "user_id", 
             select: "username email",
           },
         })
         .populate({
-          path: "comments", // Populate comments again for nested replies
+          path: "comments", 
           populate: {
-            path: "replies.user_id", // Nested populate user in replies
+            path: "replies.user_id", 
             select: "username email",
           },
         });

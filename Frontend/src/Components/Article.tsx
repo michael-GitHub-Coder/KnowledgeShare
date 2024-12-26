@@ -4,7 +4,7 @@ import { FaComments, FaRegComment } from 'react-icons/fa6';
 import { MdOutlinePerson2 } from 'react-icons/md';
 import { SlLike } from 'react-icons/sl';
 import { useParams } from 'react-router-dom';
-import {Oval}
+
 
 interface Post {
   likes: string[];
