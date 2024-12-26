@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddEditGuide = () => {
+
   const userId = localStorage.getItem("userId"); 
   const [guides, setGuides] = useState([]);
   const [editGuide, setEditGuide] = useState(null);
@@ -61,7 +65,8 @@ const AddEditGuide = () => {
 
       if (response.ok) {
         const newGuide = await response.json();
-        alert("Guide added successfully!");
+        //alert("Guide added successfully!");
+        toast.success("Guide added successfully!")
         setGuides((prevGuides) => [...prevGuides, newGuide]);
         setGuideData({
           title: "",
@@ -72,11 +77,13 @@ const AddEditGuide = () => {
         setShowAddForm(false); // Close the form
       } else {
         const errorData = await response.json();
-        alert(`Error adding guide: ${errorData.message}`);
+        //alert(`Error adding guide: ${errorData.message}`);
+        toast.error(`Error adding guide: ${errorData.message}`)
       }
     } catch (error) {
       console.error("Error adding guide:", error);
-      alert("Failed to add guide. Please try again.");
+      //alert("Failed to add guide. Please try again.");
+      toast.error("Failed to add guide. Please try again.")
     }
   };
 
@@ -107,7 +114,8 @@ const AddEditGuide = () => {
       );
 
       if (response.ok) {
-        alert("Guide updated successfully!");
+        //alert("Guide updated successfully!");
+        toast.success("Guide updated successfully!");
         setGuides((prevGuides) =>
           prevGuides.map((guide) =>
             guide._id === editGuide ? { ...guide, ...guideData } : guide
@@ -116,11 +124,13 @@ const AddEditGuide = () => {
         setEditGuide(null);
       } else {
         const errorData = await response.json();
-        alert(`Error updating guide: ${errorData.message}`);
+        //alert(`Error updating guide: ${errorData.message}`);
+        toast.error(`Error updating guide: ${errorData.message}`)
       }
     } catch (error) {
       console.error("Error updating guide:", error);
-      alert("Failed to update guide. Please try again.");
+      //alert("Failed to update guide. Please try again.");
+      toast.error("Failed to update guide. Please try again.")
     }
   };
 
@@ -140,17 +150,20 @@ const AddEditGuide = () => {
       );
 
       if (response.ok) {
-        alert("Guide deleted successfully!");
+        //alert("Guide deleted successfully!");
+        toast.success("Guide deleted successfully!s")
         setGuides((prevGuides) =>
           prevGuides.filter((guide) => guide._id !== guideId)
         );
       } else {
         const errorData = await response.json();
-        alert(`Error deleting guide: ${errorData.message}`);
+       // alert(`Error deleting guide: ${errorData.message}`);
+       toast.error(`Error deleting guide: ${errorData.message}`)
       }
     } catch (error) {
       console.error("Error deleting guide:", error);
-      alert("Failed to delete guide. Please try again.");
+     // alert("Failed to delete guide. Please try again.");
+      toast.error("Failed to delete guide. Please try again.")
     }
   };
 

@@ -4,6 +4,7 @@ import { FaComments, FaRegComment } from 'react-icons/fa6';
 import { MdOutlinePerson2 } from 'react-icons/md';
 import { SlLike } from 'react-icons/sl';
 import { useParams } from 'react-router-dom';
+import {Oval}
 
 interface Post {
   likes: string[];
@@ -43,7 +44,15 @@ const Article = () => {
   }, [_id]);
 
   if (!post) {
-    return <div>Loading...</div>;
+    return <div><Oval
+    visible={true}
+    height="80"
+    width="80"
+    color="#4fa94d"
+    ariaLabel="oval-loading"
+    wrapperStyle={{}}
+    wrapperClass=""
+    /></div>;
   }
 
   const handleLikes = ()=>{
