@@ -18,7 +18,7 @@ const AddEditGuide = () => {
   const [toggle, setToggle] = useState(false);
 
   const handleClick = () => {
-    setToggle(!toggle); // Change state to trigger a re-render
+    setToggle(!toggle); 
   };
   // Fetch guides for the logged-in user
   useEffect(() => {
