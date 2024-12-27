@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AiFillLike, AiOutlineLike } from 'react-icons/ai';
 import { BsReplyAll } from 'react-icons/bs';
 import { FaComments, FaLocationArrow, FaRegComment } from 'react-icons/fa6';
@@ -27,9 +29,11 @@ const ArticleInDash = () => {
   const [ReplyisOpen, setReplyisopen] = useState<boolean>(false);
   const [GuidelikeIcon,guidesetlikeIcon] = useState<boolean>(false);
   const [guides, setGuides] = useState<any[]>([]);
+  const [comment,setComment] = useState<string>("");
   const { _id } = useParams();
   const userId = localStorage.getItem("userId");
  const navigate = useNavigate();
+
   const fetchGuides = async () => {
     const response = await fetch(`http://localhost:3001/api/v1/guide/UsersWithComments/${_id}`);
     const res = await response.json();
@@ -89,6 +93,32 @@ const ArticleInDash = () => {
   const handleBack = ()=>{
     navigate("/Dashboard/ArticleInDash");
   }
+
+
+  const handleComment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!comment.trim()) {
+        toast.error("Comment cannot be empty.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3001/api/v1/guide/comment/${_id}`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ comment, userId }),
+        });
+
+        if (!response.ok) throw new Error('Failed to post comment');
+        toast.success('Comment added successfully!');
+        setComment('');
+        fetchGuides(); 
+    } catch (error) {
+        console.error(error);
+        toast.error('Error submitting comment.');
+    }
+};
+
   return (
     <div className="relative flex justify-center items-center min-h-screen ">
       <div className="absolute -top-1 flex flex-col lg:flex-row gap-10 container mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -104,10 +134,15 @@ const ArticleInDash = () => {
                 </div>
                 {isOpen && (
                    <div className="max-w-4xl">
-                        <form >                  
+                        <form onSubmit={handleComment}>                  
                             <div className="flex relative">
-                                <textarea placeholder="Comment.."  className="bg-gray-100 h-[100px] focus:border-0 focus:ring-0 px-2 py-2 rounded-md w-full"  />
-                                <button className="absolute bottom-0 right-0 py-2 bg-gray-700 text-white px-4 rounded-md">Send</button>
+                                <textarea
+                                  value={comment}
+                                  onChange={(e) => setComment(e.target.value)}
+                                  placeholder="Comment.."
+                                  className="bg-gray-100 h-[100px] focus:border-0 focus:ring-0 px-2 py-2 rounded-md w-full" 
+                                  />
+                                <button type="submit" className="absolute bottom-0 right-0 py-2 bg-gray-700 text-white px-4 rounded-md">Send</button>
                             </div>
                         </form>
                    </div>

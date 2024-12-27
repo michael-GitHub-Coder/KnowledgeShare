@@ -96,6 +96,17 @@ export const deleteGuide = async (req,res) =>{
     }
 }
 
+// export const replyComment = async (req,res) =>{
+    
+//     const { id } = req.params;
+//     const { comment_text } = req.body; 
+
+//     try {
+        
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+//}
 export const commentGuide = async (req, res) => {
 
     const { id } = req.params;
@@ -417,9 +428,9 @@ export const getGuideInfo = async (req, res) => {
       console.error('Error getting guide info:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
-  };
-  
-  export const getGuidesWithDetails = async () => {
+};
+
+export const getGuidesWithDetails = async () => {
     try {
       const guides = await Guide.find()
         .populate({
